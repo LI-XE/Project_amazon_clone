@@ -69,51 +69,6 @@ module.exports = {
         res.status(400).json({ message: "Invalid Login Attempt - 4" });
       });
   },
-  // login: (req, res) => {
-  //   User.findOne({ email: req.body.email }
-  //     .then((userRecord) => {
-  //       if (userRecord === null) {
-  //         res.status(400).json({ message: "Invalid Login Attempt - 1!!!!!" });
-  //       } else {
-  //         bcrypt
-  //           .compare(req.body.password, userRecord.password)
-  //           .then((isPasswordValid) => {
-  //             if (isPasswordValid === true) {
-  //               console.log("password is valid");
-  //               res
-  //                 .cookie(
-  //                   "usertoken",
-  //                   jwt.sign(
-  //                     {
-  //                       id: userRecord._id,
-  //                       username: userRecord.username,
-  //                       email: userRecord.email,
-  //                     },
-  //                     process.env.JWT_SECRET
-  //                   ),
-  //                   {
-  //                     httpOnly: true,
-  //                     expires: new Date(Date.now() + 900000000), // time until they have to log in again
-  //                   }
-  //                 )
-  //                 .json({
-  //                   message: "Successfully logged in",
-  //                   userLoggedIn: userRecord.username,
-  //                   userId: userRecord._id,
-  //                 })
-  //             } else {
-  //               res.status(400).json({ message: "Invalid Login Attempt - 2" });
-  //             }
-  //           })
-  //           .catch((err) => {
-  //             res.status(400).json({ message: "Invalid Login Attempt - 3" });
-  //           });
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       res.status(400).json({ message: "Invalid Login Attempt - 4" })
-  //     })
-  // },
 
   logout: (req, res) => {
     console.log("Logging out!");

@@ -26,7 +26,7 @@ app.use(cookieParser());
 require("./config/mongoose.config");
 
 // Routes
-// require("./routers/productRouter")(app);
+require("./routers/productRouter")(app);
 require("./routers/userRouter")(app);
 
 app.get("/", (req, res) => {

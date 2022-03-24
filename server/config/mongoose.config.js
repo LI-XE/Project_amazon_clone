@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-// const dbName = "movies-db";
 const dbName = process.env.DB_Name;
 
 mongoose
