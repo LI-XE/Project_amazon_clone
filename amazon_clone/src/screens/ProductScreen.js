@@ -45,7 +45,11 @@ export default function ProductScreen(props) {
           <Link to="/">Back to Home</Link>
           <div className="row top">
             <div className="col-2">
-              <img src={product.image} alt={product.name} className="large"></img>
+              <img
+                src={product.image}
+                alt={product.name}
+                className="large"
+              ></img>
             </div>
             <div className="col-1">
               <ul>
@@ -116,6 +120,7 @@ export default function ProductScreen(props) {
                         <AddToCartBtn
                           addToBasket={addToCartHandler}
                           productId={productId}
+                          productCountInStock={product.countInStock}
                           qty={qty}
                         />
                       </li>
