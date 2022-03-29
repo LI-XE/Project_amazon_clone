@@ -2,11 +2,13 @@ import React from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 // import { useStateValue } from "../../state/StateProvider";
 // import { auth } from "../../firebase";
 
 function Header() {
-  // const [{ basket, user }, dispatch] = useStateValue();
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
 
   // const handleAuthentication = () => {
   //   if (user) {
@@ -58,11 +60,11 @@ function Header() {
           <span className="header_optionLineOne">Your</span>
           <span className="header_optionLineTwo">Prime</span>
         </div>
-        <Link to="/checkout">
+        <Link to="/cart">
           <div className="header_optionBasket">
             <ShoppingBasketIcon />
             <span className="header_optionLineTwo header_basketCount">
-              {/* {basket?.length} */}0
+              {cartItems?.length}
             </span>
           </div>
         </Link>
