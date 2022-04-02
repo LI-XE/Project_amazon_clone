@@ -15,16 +15,16 @@ import {
   USER_UPDATE_PROFILE_SUCCESS,
 } from "../types/userTypes";
 
-export const register = (name, email, password) => async (dispatch) => {
+export const register = (username, email, password) => async (dispatch) => {
   dispatch({
     type: USER_REGISTER_REQUEST,
-    payload: { name, email, password },
+    payload: { username, email, password },
   });
   try {
     const { data } = await Axios.post(
       "http://localhost:8000/api/users/register",
       {
-        name,
+        username,
         email,
         password,
       }

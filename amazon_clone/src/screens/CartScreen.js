@@ -38,7 +38,7 @@ export default function CartScreen(props) {
   };
 
   return (
-    <div className="row top">
+    <div className="row">
       <div className="col-2">
         <h1>Shopping Cart</h1>
         {cartItems.length === 0 ? (
@@ -49,7 +49,7 @@ export default function CartScreen(props) {
           <ul>
             {cartItems.map((item) => (
               <li key={item.product}>
-                <div className="row">
+                <div className="row top">
                   <div>
                     <img
                       src={item.image}

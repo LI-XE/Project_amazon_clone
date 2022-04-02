@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { addToCart } from "../actions/cartActions";
 import { detailsProduct } from "../actions/productActions";
-import AddToCartBtn from "../components/AddToCartBtn";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import Rating from "../components/Rating";
@@ -44,14 +43,14 @@ export default function ProductScreen(props) {
         <>
           <Link to="/">Back to Home</Link>
           <div className="row top">
-            <div className="col-2">
+            <div className="col-1">
               <img
                 src={product.image}
                 alt={product.name}
                 className="large"
               ></img>
             </div>
-            <div className="col-1">
+            <div className="col-2">
               <ul>
                 <li>
                   <h1>{product.name}</h1>
@@ -111,18 +110,12 @@ export default function ProductScreen(props) {
                         </div>
                       </li>
                       <li>
-                        {/* <button
-                        onClick={addToCartHandler}
-                        className="primary block"
-                      >
-                        Add to Cart
-                      </button> */}
-                        <AddToCartBtn
-                          addToBasket={addToCartHandler}
-                          productId={productId}
-                          productCountInStock={product.countInStock}
-                          qty={qty}
-                        />
+                        <button
+                          onClick={addToCartHandler}
+                          className="primary block"
+                        >
+                          Add to Cart
+                        </button>
                       </li>
                     </>
                   )}
