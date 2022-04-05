@@ -13,7 +13,11 @@ module.exports = {
         console.log(newUser);
         res.json({
           message: "Successfully registered",
-          user: newUser,
+          // user: newUser,
+          _id: newUser._id,
+          username: newUser.username,
+          email: newUser.email,
+          isAdmin: newUser.isAdmin,
         });
       })
       .catch((err) => {
@@ -52,7 +56,8 @@ module.exports = {
                   )
                   .json({
                     message: "Successfully logged in",
-                    userLoggedIn: user.username,
+                    username: user.username,
+                    email: user.email,
                     userId: user._id,
                   });
               } else {

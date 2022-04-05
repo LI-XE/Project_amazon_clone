@@ -2,19 +2,20 @@ import React from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-// import { useStateValue } from "../../state/StateProvider";
-// import { auth } from "../../firebase";
+import { useDispatch, useSelector } from "react-redux";
+import { signout } from "../actions/userActions";
 
 function Header() {
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+  console.log(userInfo);
 
-  // const handleAuthentication = () => {
-  //   if (user) {
-  //     auth.signOut();
-  //   }
-  // };
+  const dispatch = useDispatch();
+  const signoutHandler = () => {
+    dispatch(signout());
+  };
 
   return (
     <div className="header">
@@ -32,20 +33,14 @@ function Header() {
       </div>
 
       <div className="header_nav">
-        {/* <Link to={!user && "/login"}>
-          <div onClick={handleAuthentication} className="header_option">
+        <Link to={!userInfo && "/login"}>
+          <div onClick={signoutHandler} className="header_option">
             <span className="header_optionLineOne">
-              Hello {!user ? "Guest" : user.email}
+              Hello, {!userInfo ? "Guest" : userInfo.username}
             </span>
             <span className="header_optionLineTwo">
-              {user ? "Sign Out" : "Sign In"}
+              {userInfo ? "Sign Out" : "Sign In"}
             </span>
-          </div>
-        </Link> */}
-        <Link to="/login">
-          <div className="header_option">
-            <span className="header_optionLineOne">Hello Guest</span>
-            <span className="header_optionLineTwo">Sign In</span>
           </div>
         </Link>
 

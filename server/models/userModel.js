@@ -31,9 +31,9 @@ UserSchema.virtual("confirmPassword")
   .set((value) => (this._confirmPassword = value));
 
 UserSchema.pre("validate", function (next) {
-  console.log(this.password);
-  console.log(this.confirmPassword);
-  if (this.password !== this.confirmPassword) {
+  console.log(this._password);
+  console.log(this._confirmPassword);
+  if (this._password !== this._confirmPassword) {
     this.invalidate(
       "confirmPassword",
       "Passwords didn't match.  Please type them again"
