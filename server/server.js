@@ -28,6 +28,7 @@ require("./config/mongoose.config");
 // Routes
 require("./routers/productRouter")(app);
 require("./routers/userRouter")(app);
+require("./routers/orderRouter")(app);
 
 app.get("/", (req, res) => {
   res.send("Server is ready ");

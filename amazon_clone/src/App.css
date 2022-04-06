@@ -69,6 +69,11 @@ img.large {
   width: 100%;
 }
 
+button {
+  background-color: #f8f8f8;
+  cursor: pointer;
+}
+
 input,
 select,
 textarea,
@@ -85,7 +90,7 @@ button {
 input:hover,
 select:hover,
 textarea:hover,
-button.primary:hover {
+button:hover {
   border: 0.1rem solid #404040;
 }
 
@@ -93,11 +98,6 @@ button.primary {
   background-color: #f0c040;
   justify-content: center;
   cursor: pointer;
-}
-
-button.silver {
-  background-color: silver;
-  justify-content: center;
 }
 
 button.block {
@@ -130,6 +130,17 @@ button.small {
   justify-content: start;
 }
 
+.col-2 .cart-ul{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.col-2 .cart-ul li div{
+  display: flex;
+  justify-content: center;
+  padding: 0 1em;
+}
+
 .col-1 {
   flex: 1 1 25rem;
   margin: 1em;
@@ -137,7 +148,7 @@ button.small {
 
 .col-2 {
   flex: 2 1 45rem;
-  margin: 1em;
+  margin: 0.5em 1em;
 }
 
 .min-30 {
@@ -150,8 +161,14 @@ button.small {
   border-radius: 0.5rem;
 }
 
+
+
 .card-body1 {
   padding: 1rem;
+}
+
+.card1 h2{
+  margin-bottom: 1em;
 }
 
 /* Header */
@@ -357,4 +374,104 @@ button.brick {
 .alert-success {
   color: #20a020;
   background-color: #eeffe0;
+}
+
+
+/* REGLOG */
+.reglog_screen {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.reglog_amazon_logo {
+  width: 100px;
+  object-fit: contain;
+  margin: 1em;
+}
+
+.signin_container {
+  width: 300px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.5rem;
+  border: 0.1rem solid lightgray;
+  padding: 1em;
+}
+
+.signin_container h1 {
+  font-weight: 500;
+  font-size: 3rem;
+  margin-bottom: 0.5em;
+}
+
+.signin_container div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1em;
+}
+
+.signin_container  label {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5em;
+}
+
+.signin_container  p {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-top: 1em;
+}
+
+/* Form */
+.form {
+  max-width: 60rem;
+  margin: 0 auto;
+}
+
+.form > div {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+}
+
+.form label {
+  margin: 1rem 0;
+}
+
+/* Checkout */
+.checkout-steps > div {
+  border-top: 0.4rem #c0c0c0 solid;
+  color: #c0c0c0;
+  flex: 1;
+  padding: 1rem;
+  font-weight: bold;
+}
+
+.checkout-steps > div.active {
+  border-top-color: #f08000;
+  color: #f08000;
+}
+
+/* Table */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table tbody tr:nth-of-type(odd) {
+  background-color: #f4f4f4;
+}
+
+.table td,
+.table th {
+  text-align: left;
+  border: 0.1rem solid #e4e4e4;
+  padding: 0.5rem;
+}
+
+.table button {
+  margin: 0 0.2rem;
 }

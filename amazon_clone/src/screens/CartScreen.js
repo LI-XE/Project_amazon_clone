@@ -46,7 +46,7 @@ export default function CartScreen(props) {
             Cart is empty. <Link to="/">Go Shopping</Link>
           </MessageBox>
         ) : (
-          <ul>
+          <ul className="cart-ul">
             {cartItems.map((item) => (
               <li key={item.product}>
                 <div className="row top">
