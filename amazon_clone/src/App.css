@@ -124,6 +124,10 @@ button.small {
   padding: 1em 0;
 }
 
+.row2 {
+  padding: 1em;
+}
+
 .row.top {
   display: flex;
   align-items: flex-start;
