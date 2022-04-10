@@ -171,6 +171,8 @@ button.small {
   margin-bottom: 1em;
 }
 
+
+
 /* Header */
 .header {
   height: 5rem;
@@ -474,4 +476,13 @@ button.brick {
 
 .table button {
   margin: 0 0.2rem;
+}
+
+/* Order */
+.order_id {
+  margin: 0 1em;
+}
+
+#order p {
+  margin-bottom: 1em;
 }

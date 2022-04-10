@@ -1,6 +1,7 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { generateToken } = require("../config/jwt.config");
 
 module.exports = {
   register: (req, res) => {
@@ -18,6 +19,7 @@ module.exports = {
           username: newUser.username,
           email: newUser.email,
           isAdmin: newUser.isAdmin,
+          token: generateToken(newUser),
         });
       })
       .catch((err) => {
@@ -59,6 +61,7 @@ module.exports = {
                     username: user.username,
                     email: user.email,
                     userId: user._id,
+                    token: generateToken(user),
                   });
               } else {
                 res.status(400).json({ message: "Login and/or Email Invalid" });

@@ -35,6 +35,7 @@ export default function PlaceOrderScreen(props) {
     if (success) {
       navigate(`/order/${order._id}`);
       dispatch({ type: ORDER_CREATE_RESET });
+      console.log(order);
     }
   }, [dispatch, order, navigate, success]);
 
