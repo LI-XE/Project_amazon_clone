@@ -71,6 +71,28 @@ const data = {
       numReviews: 10,
       description: "high quality product",
     },
+    {
+      brand: "Carter",
+      name: "3-Piece Giraffe Little Short Set",
+      category: "set",
+      image: "/images/product6.jpg",
+      price: 23.8,
+      countInStock: 8,
+      rating: 4.9,
+      numReviews: 10,
+      description: "high quality product",
+    },
+    {
+      brand: "Carter",
+      name: "Simple Joys by Carter's Toddlers",
+      category: "set",
+      image: "/images/product7.jpg",
+      price: 20.5,
+      countInStock: 10,
+      rating: 5.0,
+      numReviews: 20,
+      description: "Baby Boys' 3-Piece Button-Up, Shorts, and Tee Playwear Set",
+    },
   ],
 };
 

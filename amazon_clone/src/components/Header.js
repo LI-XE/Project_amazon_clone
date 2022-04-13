@@ -33,16 +33,43 @@ function Header() {
       </div>
 
       <div className="header_nav">
-        <Link to={!userInfo && "/login"}>
-          <div onClick={signoutHandler} className="header_option">
-            <span className="header_optionLineOne">
-              Hello, {!userInfo ? "Guest" : userInfo.username}
-            </span>
-            <span className="header_optionLineTwo">
-              {userInfo ? "Sign Out" : "Sign In"}
-            </span>
-          </div>
-        </Link>
+        <div className="dropdown">
+          <Link to="/signin">
+            <div className="header_option">
+              <span className="header_optionLineOne">
+                Hello, {!userInfo ? "Guest" : userInfo.username}
+              </span>
+              <div className="header_optionLineTwo">
+                {/* <Link to="#"> */}
+                <span>
+                  Account & Lists <i className="fa fa-caret-down"></i>
+                </span>
+                {/* </Link> */}
+              </div>
+            </div>
+          </Link>
+          <ul className="dropdown-content">
+            {userInfo ? (
+              <>
+                <li>
+                  <Link to="/profile">User Profile</Link>
+                </li>
+                <li>
+                  <Link to="/orderhistory">Order History</Link>
+                </li>
+                <li>
+                  <Link to="#signout" onClick={signoutHandler}>
+                    Sign Out
+                  </Link>{" "}
+                </li>
+              </>
+            ) : (
+              <li>
+                <Link to={!userInfo && "/signin"}>SignIn</Link>
+              </li>
+            )}
+          </ul>
+        </div>
 
         <Link to="/orderhistory">
           <div className="header_option">
@@ -51,10 +78,10 @@ function Header() {
           </div>
         </Link>
 
-        <div className="header_option">
+        {/* <div className="header_option">
           <span className="header_optionLineOne">Your</span>
           <span className="header_optionLineTwo">Prime</span>
-        </div>
+        </div> */}
         <Link to="/cart">
           <div className="header_optionBasket">
             <ShoppingBasketIcon />

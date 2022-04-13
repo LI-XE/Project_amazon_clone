@@ -14,10 +14,18 @@ export default function OrderHistoryScreen(props) {
   }, [dispatch]);
 
   const navigate = useNavigate();
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+  if (!userInfo) {
+    navigate("/signin");
+  }
+
   return (
-    <div>
+    <div id="orderhistory">
       <div className="row2">
-        <h1>Order History</h1>
+        <h1>
+          Order History <span>( {orders?.length} orders ) </span>
+        </h1>
         {loading ? (
           <LoadingBox></LoadingBox>
         ) : error ? (

@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import PrivateRoute from "./components/PrivateRoute";
 import HomeScreen from "./screens/HomeScreen";
 import CartScreen from "./screens/CartScreen";
 import ProductScreen from "./screens/ProductScreen";
@@ -13,6 +14,7 @@ import PaymentMethodScreen from "./screens/PaymentMethodScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import OrderScreen from "./screens/OrderScreen";
 import OrderHistoryScreen from "./screens/OrderHistoryScreen";
+import ProfileScreen from "./screens/ProfileScreen";
 
 function App() {
   return (
@@ -33,6 +35,14 @@ function App() {
             <Route
               path="/orderhistory"
               element={<OrderHistoryScreen />}
+            ></Route>
+            <Route
+              path="/profile"
+              element={
+                <PrivateRoute>
+                  <ProfileScreen />
+                </PrivateRoute>
+              }
             ></Route>
           </Routes>
         </div>

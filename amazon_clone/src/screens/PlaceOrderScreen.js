@@ -40,7 +40,7 @@ export default function PlaceOrderScreen(props) {
   }, [dispatch, order, navigate, success]);
 
   return (
-    <div>
+    <div id="placeorder">
       <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>
       <div className="row top">
         <div className="col-2">
@@ -50,7 +50,9 @@ export default function PlaceOrderScreen(props) {
                 <h2>Shipping</h2>
                 <p>
                   <strong>Name:</strong>
-                  {cart.shippingAddress.fullName} <bt />
+                  {cart.shippingAddress.fullName}{" "}
+                </p>
+                <p>
                   <strong>Address:</strong>
                   {cart.shippingAddress.address}, {cart.shippingAddress.city},
                   {cart.shippingAddress.postalCode},
