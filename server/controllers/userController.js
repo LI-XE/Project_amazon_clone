@@ -1,7 +1,9 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { generateToken } = require("../config/jwt.config");
+const { generateToken, isAuth } = require("../config/jwt.config");
+const orderController = require("./orderController");
+const { update } = require("../models/userModel");
 
 module.exports = {
   register: (req, res) => {
@@ -14,7 +16,6 @@ module.exports = {
         console.log(newUser);
         res.json({
           message: "Successfully registered",
-          // user: newUser,
           _id: newUser._id,
           username: newUser.username,
           email: newUser.email,
@@ -45,7 +46,7 @@ module.exports = {
                     "usertoken",
                     jwt.sign(
                       {
-                        id: user._id,
+                        _id: user._id,
                         username: user.username,
                         email: user.email,
                       },
@@ -60,7 +61,7 @@ module.exports = {
                     message: "Successfully logged in",
                     username: user.username,
                     email: user.email,
-                    userId: user._id,
+                    _id: user._id,
                     token: generateToken(user),
                   });
               } else {
@@ -84,15 +85,35 @@ module.exports = {
     res.json({ message: "You have successfully logged out of our system" });
   },
 
-  getOneUser: (req, res) => {
-    User.findOne({ _id: req.params.id })
+  getOneUser: async (req, res) => {
+    await User.findOne({ _id: req.params.id })
       .then((oneUser) => {
-        console.log(oneUser);
-        res.json(oneUser);
+        // console.log("One User");
+        // console.log(oneUser);
+        res.json({
+          _id: oneUser._id,
+          username: oneUser.username,
+          email: oneUser.email,
+        });
+        // console.log(oneUser.id);
       })
       .catch((err) => {
         console.log(err);
         res.status(400).json(err);
       });
+  },
+
+  updateProfile: async (req, res) => {
+    const _id = req.params.id;
+    const user = await User.findOneAndUpdate(
+      { _id },
+      { username: req.body.username }
+    );
+    res.json({
+      _id: user._id,
+      username: user.username,
+      isAuth: user.isAuth,
+      token: generateToken(user),
+    });
   },
 };
