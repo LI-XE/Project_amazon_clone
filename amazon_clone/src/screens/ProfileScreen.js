@@ -8,6 +8,8 @@ import { USER_UPDATE_PROFILE_RESET } from "../types/userTypes";
 export default function ProfileScreen() {
   const [email, setEmail] = useState();
   const [username, setUsername] = useState();
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
@@ -32,8 +34,11 @@ export default function ProfileScreen() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-
-    dispatch(updateUserProfile({ userId: user._id, username }));
+    if (password !== confirmPassword) {
+      alert("Password and Confirm Password are not matched.");
+    } else {
+      dispatch(updateUserProfile({ _id: user._id, username, email, password }));
+    }
   };
   return (
     <div>
@@ -76,12 +81,13 @@ export default function ProfileScreen() {
                 }}
               ></input>
             </div>
-            {/* <div>
+            <div>
               <label htmlFor="password">Password</label>
               <input
                 id="password"
                 type="password"
                 placeholder="Enter Password"
+                value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
@@ -97,7 +103,7 @@ export default function ProfileScreen() {
                   setConfirmPassword(e.target.value);
                 }}
               ></input>
-            </div> */}
+            </div>
             <div>
               <label />
               <button className="primary" type="submit">

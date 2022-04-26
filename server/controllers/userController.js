@@ -104,16 +104,21 @@ module.exports = {
   },
 
   updateProfile: async (req, res) => {
-    const _id = req.params.id;
-    const user = await User.findOneAndUpdate(
-      { _id },
-      { username: req.body.username }
-    );
-    res.json({
-      _id: user._id,
-      username: user.username,
-      isAuth: user.isAuth,
-      token: generateToken(user),
-    });
+    const user = await User.findById(req.params.id);
+    if (user) {
+      user.username = req.body.username || user.username;
+      user.email = req.body.email || user.email;
+      if (req.body.password) {
+        user.password = bcrypt.hashSync(req.body.password, 8);
+      }
+      const updatedUser = await user.save();
+      res.send({
+        _id: updatedUser._id,
+        username: updatedUser.username,
+        email: updatedUser.email,
+        isAuth: updatedUser.isAuth,
+        token: generateToken(updatedUser),
+      });
+    }
   },
 };

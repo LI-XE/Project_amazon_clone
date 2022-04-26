@@ -104,35 +104,33 @@ export const detailsUser = (_id) => async (dispatch, getState) => {
   }
 };
 
-export const updateUserProfile =
-  ({ username, userId }) =>
-  async (dispatch, getState) => {
-    dispatch({
-      type: USER_UPDATE_PROFILE_REQUEST,
-      payload: { username, userId },
-    });
-    const {
-      userSignin: { userInfo },
-    } = getState();
-    try {
-      const { data } = await Axios.put(
-        `http://localhost:8000/api/users/${userId}`,
-        { username, userId },
-        {
-          headers: {
-            Authorization: `Bearer ${userInfo.token}`,
-          },
-        }
-      );
+export const updateUserProfile = (user) => async (dispatch, getState) => {
+  dispatch({
+    type: USER_UPDATE_PROFILE_REQUEST,
+    payload: user,
+  });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios.put(
+      `http://localhost:8000/api/users/${user._id}`,
+      user,
+      {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+    );
 
-      dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
-      dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
-      localStorage.setItem("userInfo", JSON.stringify(data));
-    } catch (error) {
-      const message =
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message;
-      dispatch({ type: USER_UPDATE_PROFILE_FAIL, payload: message });
-    }
-  };
+    dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
+    dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
+    localStorage.setItem("userInfo", JSON.stringify(data));
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: USER_UPDATE_PROFILE_FAIL, payload: message });
+  }
+};

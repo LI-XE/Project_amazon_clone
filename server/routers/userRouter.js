@@ -11,5 +11,5 @@ module.exports = function (app) {
   // get one user
   app.get("/api/users/:id", UserController.getOneUser);
   // get one user
-  app.put("/api/users/:id", isAuth, UserController.updateProfile);
+  app.put("/api/users/:id", UserController.updateProfile);
 };
