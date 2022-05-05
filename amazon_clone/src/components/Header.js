@@ -29,7 +29,9 @@ function Header() {
 
       <div className="header_search">
         <input className="header_searchInput" type="text" />
-        <SearchIcon className="header_searchIcon" />
+        <button>
+          <SearchIcon className="header_searchIcon" />
+        </button>
       </div>
 
       <div className="header_nav">
@@ -77,11 +79,6 @@ function Header() {
             <span className="header_optionLineTwo">& Orders</span>
           </div>
         </Link>
-
-        {/* <div className="header_option">
-          <span className="header_optionLineOne">Your</span>
-          <span className="header_optionLineTwo">Prime</span>
-        </div> */}
         <Link to="/cart">
           <div className="header_optionBasket">
             <ShoppingBasketIcon />

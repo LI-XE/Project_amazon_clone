@@ -41,7 +41,7 @@ export default function ProfileScreen() {
     }
   };
   return (
-    <div>
+    <div className="profile_screen">
       <form className="form" onSubmit={submitHandler}>
         <div>
           <h1>User Profile</h1>
