@@ -5,6 +5,8 @@ module.exports = function (app) {
   app.get("/api/products/create", ProductController.createProducts);
   // all products
   app.get("/api/products/", ProductController.products);
-  // // get one product
+  // get one product
   app.get("/api/products/:id", ProductController.getOneProduct);
+  // delete
+  app.delete("/api/products/:id", ProductController.deleteProduct);
 };

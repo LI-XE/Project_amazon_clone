@@ -44,4 +44,19 @@ module.exports = {
         res.json(err);
       });
   },
+
+  deleteProduct: (req, res) => {
+    console.log("inside deleteProduct");
+    console.log(req.params.id);
+
+    Product.findByIdAndDelete(req.params.id)
+      .then((deletedProduct) => {
+        console.log(deletedProduct);
+        res.json(deletedProduct);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.json(err);
+      });
+  },
 };
