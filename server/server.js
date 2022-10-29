@@ -2,6 +2,7 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
+const path = require("path");
 
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
@@ -36,6 +37,12 @@ app.get("/api/config/paypal", (req, res) => {
 app.get("/", (req, res) => {
   res.send("Server is ready ");
 });
+
+// const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, "/amazon_clone/build")));
+app.get("*", (req, res) =>
+  res.sendFile(path.join(__dirname, "/amazon_clone/build/index.html"))
+);
 
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });

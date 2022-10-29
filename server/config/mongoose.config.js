@@ -1,17 +1,15 @@
 const mongoose = require("mongoose");
-const dbName = process.env.DB_Name;
+const MONGODB_URL = process.env.MONGODB_URL;
 
 mongoose
-  .connect("mongodb://localhost/" + dbName, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() =>
-    console.log(`Established a connection to the "${dbName}" database`)
+  .connect(
+    MONGODB_URL
+    //    {
+    //   useNewUrlParser: true,
+    //   // useUnifiedTopology: true,
+    // }
   )
+  .then(() => console.log(`Established a connection to the  database`))
   .catch((err) =>
-    console.log(
-      `Something went wrong when connecting to the "${dbName}" database`,
-      err
-    )
+    console.log(`Something went wrong when connecting to the  database`, err)
   );

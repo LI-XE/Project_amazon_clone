@@ -10,6 +10,8 @@ module.exports = {
           console.log(err);
           res.status(401).json({ verified: false });
         } else {
+          req.token = token;
+          req.user = user;
           console.log("You are authenticated");
           next();
         }

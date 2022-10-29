@@ -1,0 +1,21 @@
+{
+  "name": "project_amazon_clone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd server && npm install && cd ../amazon_clone && npm install && npm run build",
+    "start": "node server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LI-XE/Project_amazon_clone.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LI-XE/Project_amazon_clone/issues"
+  },
+  "homepage": "https://github.com/LI-XE/Project_amazon_clone#readme"
+}
