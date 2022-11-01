@@ -30,6 +30,7 @@ require("./config/mongoose.config");
 require("./routers/productRouter")(app);
 require("./routers/userRouter")(app);
 require("./routers/orderRouter")(app);
+require("./routers/seedRouter")(app);
 app.get("/api/config/paypal", (req, res) => {
   res.send(process.env.PAYPAL_CLIENT_ID || "sb");
 });
