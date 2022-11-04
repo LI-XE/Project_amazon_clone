@@ -46,6 +46,5 @@
   },
   "devDependencies": {
     "npm-install-peers": "^1.2.2"
-  },
-  "proxy": "http://localhost:8000/api/"
+  }
 }
