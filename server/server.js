@@ -15,12 +15,12 @@ app.use(
   })
 );
 
-app.use(
-  cors({
-    credentials: true,
-    origin: "http://localhost:3000",
-  })
-);
+// app.use(
+//   cors({
+//     credentials: true,
+//     origin: "http://localhost:3000",
+//   })
+// );
 app.use(cookieParser());
 
 // run the Mongoose connect file
@@ -30,7 +30,6 @@ require("./config/mongoose.config");
 require("./routers/productRouter")(app);
 require("./routers/userRouter")(app);
 require("./routers/orderRouter")(app);
-require("./routers/seedRouter")(app);
 app.get("/api/config/paypal", (req, res) => {
   res.send(process.env.PAYPAL_CLIENT_ID || "sb");
 });
@@ -40,10 +39,16 @@ app.get("/", (req, res) => {
 });
 
 // const __dirname = path.resolve();
-app.use(express.static(path.join(__dirname, "/amazon_clone/build")));
-app.get("*", (req, res) =>
-  res.sendFile(path.join(__dirname, "/amazon_clone/build/index.html"))
-);
+app.use(express.static(path.join(__dirname, "amazon_clone", "build")));
+// app.get("*", (req, res) =>
+//   res.sendFile(path.join(__dirname, "/amazon_clone/build/index.html"))
+// );
+
+// app.use("*", express.static(path.join(__dirname, "/amazon_clone/build")));
+
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "amazon_clone", "build", "index.html"));
+});
 
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
