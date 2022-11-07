@@ -39,9 +39,9 @@ app.get("/", (req, res) => {
 });
 
 // const __dirname = path.resolve();
-app.use(express.static(("amazon_clone/build/")));s
+app.use(express.static("amazon_clone/build/"));
 app.get("*", (req, res) =>
-  res.sendFile(path.resolve(__dirname, "amazon_clone","build", "index.html"))
+  res.sendFile(path.resolve(__dirname, "amazon_clone", "build", "index.html"))
 );
 
 // app.use("*", express.static(path.join(__dirname, "/amazon_clone/build")));
