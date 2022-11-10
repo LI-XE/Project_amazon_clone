@@ -44,10 +44,10 @@ app.get("/", (req, res) => {
 //   res.sendFile(path.resolve(__dirname, "amazon_clone", "build", "index.html"))
 // );
 
-app.use(express.static(path.join(__dirname, "amazon_clone", "build")));
+app.use(express.static(path.join(path.resolve(), "/amazon_clone/build")));
 
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "amazon_clone", "build", "index.html"));
+  res.sendFile(path.join(path.resolve(), "/amazon_clone/build/index.html"));
 });
 
 app.use((err, req, res, next) => {
