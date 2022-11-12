@@ -44,7 +44,6 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:8000/",
   "devDependencies": {
     "npm-install-peers": "^1.2.2"
   }
