@@ -34,7 +34,6 @@ module.exports = {
       .then((user) => {
         if (user === null) {
           res.status(400).json({ message: "Invalid Login Attempt - 1" });
-          console.log(err);
         } else {
           bcrypt
             .compare(req.body.password, user.password)
@@ -89,7 +88,7 @@ module.exports = {
     await User.findOne({ _id: req.params.id })
       .then((oneUser) => {
         // console.log("One User");
-        // console.log(oneUser);
+        console.log(oneUser);
         res.json({
           _id: oneUser._id,
           username: oneUser.username,

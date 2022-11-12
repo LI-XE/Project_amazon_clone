@@ -7,9 +7,9 @@ module.exports = function (app) {
   // login user
   app.post("/api/users/login", UserController.login);
   // logout user
-  app.post("/api/users/logout", UserController.logout);
+  app.post("/api/users/logout", isAuth, UserController.logout);
   // get one user
   app.get("/api/users/:id", UserController.getOneUser);
   // get one user
-  app.put("/api/users/:id", UserController.updateProfile);
+  app.put("/api/users/:id", isAuth, UserController.updateProfile);
 };
