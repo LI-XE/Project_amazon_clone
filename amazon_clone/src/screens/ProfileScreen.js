@@ -88,6 +88,7 @@ export default function ProfileScreen() {
                 type="password"
                 placeholder="Enter Password"
                 value={password}
+                required
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
@@ -99,6 +100,7 @@ export default function ProfileScreen() {
                 id="confirmPassword"
                 type="password"
                 placeholder="Enter Confirm Password"
+                required
                 onChange={(e) => {
                   setConfirmPassword(e.target.value);
                 }}

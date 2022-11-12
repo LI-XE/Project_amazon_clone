@@ -51,6 +51,7 @@ function SigninScreen(props) {
               id="email"
               placeholder="Enter email"
               required
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
             ></input>
           </div>
@@ -60,6 +61,7 @@ function SigninScreen(props) {
               type="password"
               id="password"
               placeholder="Enter password"
+              value={password}
               required
               onChange={(e) => setPassword(e.target.value)}
             ></input>
