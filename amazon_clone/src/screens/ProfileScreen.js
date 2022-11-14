@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { detailsUser, updateUserProfile } from "../actions/userActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
@@ -22,15 +23,19 @@ export default function ProfileScreen() {
     loading: loadingUpdate,
   } = userUpdateProfile;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!userInfo) {
+      navigate("/signin");
+    }
     if (!user) {
       dispatch({ type: USER_UPDATE_PROFILE_RESET });
       dispatch(detailsUser(userInfo._id));
     } else {
       setUsername(user.username);
     }
-  }, [dispatch, userInfo._id, user]);
+  }, [dispatch, userInfo, userInfo._id, user, navigate]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -88,7 +93,6 @@ export default function ProfileScreen() {
                 type="password"
                 placeholder="Enter Password"
                 value={password}
-                required
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
@@ -100,7 +104,6 @@ export default function ProfileScreen() {
                 id="confirmPassword"
                 type="password"
                 placeholder="Enter Confirm Password"
-                required
                 onChange={(e) => {
                   setConfirmPassword(e.target.value);
                 }}
