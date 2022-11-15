@@ -21,16 +21,7 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// we must encrypt the password BEFORE we save to the database to make
-//		sure that no one has access to the user's "real" password
-UserSchema.pre("save", function (next) {
-  bcrypt.hash(this.password, 10).then((hashedPassword) => {
-    console.log("password: " + this.password);
-    console.log("hashed: " + hashedPassword);
-    this.password = hashedPassword;
-    next();
-  });
-});
+
 
 // we need compare the password and confirm password and fail validation
 //		if they do not match
@@ -52,6 +43,17 @@ UserSchema.pre("validate", function (next) {
   }
   // if the passwords match, we can successfully continue on to the "normal" validate steps
   next();
+});
+
+// we must encrypt the password BEFORE we save to the database to make
+//		sure that no one has access to the user's "real" password
+UserSchema.pre("save", function (next) {
+  bcrypt.hash(this.password, 10).then((hashedPassword) => {
+    console.log("password: " + this.password);
+    console.log("hashed: " + hashedPassword);
+    this.password = hashedPassword;
+    next();
+  });
 });
 
 const User = mongoose.model("User", UserSchema);
