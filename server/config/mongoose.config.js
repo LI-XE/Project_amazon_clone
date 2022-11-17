@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const MONGODB_URL = process.env.MONGODB_URL;
 
 mongoose
-  .connect(process.env.MONGODB_URL, {
+  .connect("mongodb+srv://hyangeun:En124600@cluster0.xgg8seg.mongodb.net/project_amazon_clone?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
