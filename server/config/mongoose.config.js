@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-const MONGODB_URL = process.env.MONGODB_URL;
+const MONGODB_URL = process.env.MONGODB_URL || "mongodb://localhost/amazonDB";
 
 mongoose
-  .connect(process.env.MONGODB_URL || "mongodb://localhost/amazonDB", {
+  .connect(MONGODB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
