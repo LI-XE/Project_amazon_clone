@@ -58,5 +58,17 @@ module.exports = {
         console.log(err);
         res.json(err);
       });
+    },
+    
+  // Get Categories
+  getCategories: (req, res ) => {
+    Product.find().distinct("category")
+      .then((categories) => {
+        console(categories);
+        res.json(categories);
+      }).catch(err => {
+        console.log(err);
+        res.json(err);
+      });
   },
 };

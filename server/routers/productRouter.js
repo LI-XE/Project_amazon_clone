@@ -9,4 +9,6 @@ module.exports = function (app) {
   app.get("/api/products/:id", ProductController.getOneProduct);
   // delete
   app.delete("/api/products/:id", ProductController.deleteProduct);
+  // get categories
+  app.get("/api/products/categories", ProductController.getCategories);
 };
