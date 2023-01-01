@@ -14,11 +14,11 @@ export default function HomeScreen() {
   const [qty, setQty] = useState();
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
-  // console.log(cartItems.length);
 
   useEffect(() => {
-    dispatch(listProducts());
+    dispatch(listProducts("all"));
   }, [dispatch]);
+
   return (
     <div>
       {loading ? (
@@ -35,6 +35,7 @@ export default function HomeScreen() {
               "https://m.media-amazon.com/images/S/sonata-images-prod/US_TVOD_Sing2_VOD/86b61c4f-a7f6-48a3-a0c9-607c86b9f31a._UR3000,600_SX1500_FMwebp_.jpeg",
             ]}
           />
+          {products?.length === 0 && <MessageBox>No Product Found</MessageBox>}
           <div className="row center">
             {products?.map((product, key) => (
               <Product key={product._id} product={product} />

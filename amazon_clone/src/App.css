@@ -45,6 +45,7 @@ h2 {
 
 a {
   text-decoration: none;
+  color: black;
 }
 
 a:hover {
@@ -361,6 +362,59 @@ button.small {
   color: #ff8000;
 }
 
+aside {
+  position: fixed;
+  width: 30rem;
+  height: 100%;
+  top: 0;
+  background-color: #efefef;
+  z-index: 1000;
+  transform: translateX(-30rem);
+  transition: all 0.5s;
+}
+
+aside.open {
+  transform: translateX(0);
+}
+
+button.sidebar_btn {
+  /* font-size: 3rem; */
+  /* padding: 0.2em 0.5em; */
+  margin: 0 0.5em;
+  background: none;
+  color: #ffffff;
+  /* cursor: pointer; */
+}
+
+button.sidebar_btn:hover {
+  border-color: #ffffff;
+}
+
+aside ul {
+  padding: 2em;
+}
+
+aside li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5em;
+}
+
+button.sidebar_close {
+  padding: 0.3em 0.8em;
+    font-size: 1.5rem;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 100000;
+    color: black;
+    background:none;
+    border-color: #efefef;
+  }
+
+  button.sidebar_close:hover {
+    color: #a02020;
+  }
 
 /* main */
 .container {
@@ -679,6 +733,55 @@ button.small {
 .profile_screen {
   padding: 1em;
 }
+
+/* search screen */
+.search_screen {
+  width: 100%;
+  display: flex;
+  padding: 2em;
+}
+
+.search_screen .left h2 {
+  font-size: 2rem;
+  margin-bottom: 2em;
+}
+
+.search_screen .left h3 {
+  margin-bottom: 0.5em;
+}
+
+.search_screen .left ul {
+  border-top: 0.1em solid lightgray;
+}
+
+.search_screen .left li {
+  padding: 0.5em;
+}
+
+.search_screen .fa {
+  margin-right: 1em;
+  cursor: pointer;
+}
+
+.search_screen .left {
+  flex: 1;
+  padding: 1em;
+  border-right: 0.1em solid lightgray;
+}
+
+.search_screen .right {
+  flex: 5;
+  padding: 1em;
+}
+
+.search_screen .right .results {
+   padding: 0 2em;
+}
+
+
+
+
+
 
 @media screen and (min-width: 374px) and (max-width: 660px) {
 

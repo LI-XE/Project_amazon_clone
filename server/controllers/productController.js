@@ -18,7 +18,12 @@ module.exports = {
   // get all products
   products: (req, res) => {
     console.log("All Products List");
-    Product.find({})
+    const name = req.query.name || "";
+    const category = req.query.category || "";
+    const nameFilter = name ? { name: { $regex: name, $options: "i" } } : {};
+    const categoryFilter = category ? { category } : {};
+    Product.find({ ...nameFilter, ...categoryFilter })
+      // .populate("seller", "seller.name seller.logo")
       .then((allProducts) => {
         console.log(allProducts);
         res.json(allProducts);
@@ -58,15 +63,16 @@ module.exports = {
         console.log(err);
         res.json(err);
       });
-    },
-    
+  },
+
   // Get Categories
-  getCategories: (req, res ) => {
-    Product.find().distinct("category")
+  getCategories: (req, res) => {
+    Product.find({})
+      .distinct("category")
       .then((categories) => {
-        console(categories);
         res.json(categories);
-      }).catch(err => {
+      })
+      .catch((err) => {
         console.log(err);
         res.json(err);
       });
