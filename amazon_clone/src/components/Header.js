@@ -1,21 +1,37 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signout } from "../actions/userActions";
+import SearchBox from "./SearchBox";
+import LoadingBox from "./LoadingBox";
+import MessageBox from "./MessageBox";
+import { listCategories } from "../actions/productActions";
 
 function Header() {
+  const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   console.log(userInfo);
+  const listCategory = useSelector((state) => state.categoryList);
+  const {
+    loading: loadingCategory,
+    error: errorCategory,
+    categories,
+  } = listCategory;
 
   const dispatch = useDispatch();
   const signoutHandler = () => {
     dispatch(signout());
   };
+
+  useEffect(() => {
+    dispatch(listCategories());
+    console.log(`categories: ${categories}`);
+  }, [dispatch]);
 
   return (
     <div className="header">
@@ -26,14 +42,52 @@ function Header() {
           alt=""
         />
       </Link>
-
-      <div className="header_search">
+      <div>
+        <button
+          type="button"
+          className="sidebar_btn"
+          onClick={() => setSidebarIsOpen(true)}
+        >
+          <i className="fa fa-bars"></i>
+        </button>
+      </div>
+      <aside className={sidebarIsOpen ? "open" : ""}>
+        <button
+          className="sidebar_close"
+          onClick={() => setSidebarIsOpen(false)}
+          type="button"
+        >
+          <i className="fa fa-close"></i>
+        </button>
+        <ul>
+          <strong>Categories</strong>
+          {loadingCategory ? (
+            <LoadingBox />
+          ) : errorCategory ? (
+            <MessageBox variant="danger">{errorCategory}</MessageBox>
+          ) : (
+            categories?.map((cate) => (
+              <li key={cate._id}>
+                <Link
+                  to={`/search/category/${cate}`}
+                  onClick={() => setSidebarIsOpen(false)}
+                >
+                  {cate}
+                </Link>
+              </li>
+            ))
+          )}
+        </ul>
+      </aside>
+      {/* <div className="header_search">
         <input className="header_searchInput" type="text" />
         <button>
           <SearchIcon className="header_searchIcon" />
         </button>
+      </div> */}
+      <div className="header_search">
+        <SearchBox />
       </div>
-
       <div className="header_nav">
         <div className="dropdown">
           <Link to="/signin">
