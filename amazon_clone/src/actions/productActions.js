@@ -12,15 +12,14 @@ import {
 } from "../types/productTypes";
 
 export const listProducts =
-  ({ name = "", category = "" }) =>
+  ({ name = "", category = "", min = 0, max = 0, rating = 0 }) =>
   async (dispatch) => {
     dispatch({
       type: PRODUCT_LIST_REQUEST,
     });
     try {
-      // const { data } = await Axios.get("http://localhost:8000/api/products/");
       const { data } = await Axios.get(
-        `http://localhost:8000/api/products?name=${name}&category=${category}`
+        `http://localhost:8000/api/products?name=${name}&category=${category}&min=${min}&max=${max}&rating=${rating}`
       );
       dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
     } catch (error) {

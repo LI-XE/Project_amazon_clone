@@ -6,10 +6,21 @@ import { listProducts } from "../actions/productActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import Product from "../components/Product";
+import Rating from "../components/Rating";
+import { prices } from "../utils";
+import { ratings } from "../utils";
 
 function SearchScreen(props) {
   const [listOpen, setListOpen] = useState(true);
-  const { name = "all", category = "all" } = useParams();
+  const [priceListOpen, setPriceListOpen] = useState(true);
+  const [ratingListOpen, setRatingListOpen] = useState(true);
+  const {
+    name = "all",
+    category = "all",
+    min = 0,
+    max = 0,
+    rating = 0,
+  } = useParams();
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
@@ -26,15 +37,21 @@ function SearchScreen(props) {
       listProducts({
         name: name !== "all" ? name : "",
         category: category !== "all" ? category : "",
+        min,
+        max,
+        rating,
       })
     );
     dispatch(listCategories());
-  }, [dispatch, name, category]);
+  }, [dispatch, name, category, min, max, rating]);
 
   const getFilterUrl = (filter) => {
     const filterCategory = filter.category || category;
     const filterName = filter.name || name;
-    return `/search/category/${filterCategory}/name/${filterName}`;
+    const filterRating = filter.rating || rating;
+    const filterMin = filter.min ? filter.min : filter.min === 0 ? 0 : min;
+    const filterMax = filter.max ? filter.max : filter.max === 0 ? 0 : max;
+    return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}`;
   };
   return (
     <div className="search_screen">
@@ -47,29 +64,93 @@ function SearchScreen(props) {
             ) : (
               <i className="fa fa-chevron-up" />
             )}
-
             <h3>Categories</h3>
           </div>
-
-          {loadingCategory ? (
-            <LoadingBox />
-          ) : errorCategory ? (
-            <MessageBox variant="danger">{errorCategory}</MessageBox>
-          ) : (
-            <ul>
-              {listOpen &&
-                categories?.map((cate) => (
-                  <li key={cate._id}>
+          <div>
+            {loadingCategory ? (
+              <LoadingBox />
+            ) : errorCategory ? (
+              <MessageBox variant="danger">{errorCategory}</MessageBox>
+            ) : (
+              <ul>
+                { listOpen && (
+                  <li>
                     <Link
-                      to={getFilterUrl({ category: cate })}
-                      className={cate === category ? "active" : ""}
+                      to={getFilterUrl({ category: "all" })}
+                      className={"all" === category ? "active" : ""}
                     >
-                      {cate}
+                      All
                     </Link>
                   </li>
-                ))}
-            </ul>
-          )}
+                )}
+                { listOpen &&
+                  categories?.map((cate) => (
+                    <li key={cate._id}>
+                      <Link
+                        to={getFilterUrl({ category: cate })}
+                        className={cate === category ? "active" : ""}
+                      >
+                        {cate}
+                      </Link>
+                    </li>
+                  ))}
+              </ul>
+            )}
+          </div>
+          <div
+            className="row top"
+            onClick={() => setPriceListOpen(!priceListOpen)}
+          >
+            {priceListOpen ? (
+              <i className="fa fa-chevron-down" />
+            ) : (
+              <i className="fa fa-chevron-up" />
+            )}
+            <h3>Price</h3>
+          </div>
+          <ul>
+            {priceListOpen &&
+              prices?.map((p) => (
+                <li key={p.name}>
+                  <Link
+                    to={getFilterUrl({ min: p.min, max: p.max })}
+                    className={
+                      `${p.min} - ${p.max}` === `${min} - ${max}`
+                        ? "active"
+                        : ""
+                    }
+                  >
+                    {p.name}
+                  </Link>
+                </li>
+              ))}
+          </ul>
+          <div
+            className="row top"
+            onClick={() => setRatingListOpen(!ratingListOpen)}
+          >
+            {ratingListOpen ? (
+              <i className="fa fa-chevron-down" />
+            ) : (
+              <i className="fa fa-chevron-up" />
+            )}
+            <h3>Avg. Customer Review</h3>
+          </div>
+          <ul>
+            {ratingListOpen &&
+              ratings?.map((r) => (
+                <li key={r.name}>
+                  <Link
+                    to={getFilterUrl({ rating: r.rating })}
+                    className={
+                      r.rating === rating ? "active" : "" ? "active" : ""
+                    }
+                  >
+                    <Rating caption={" & up "} rating={r.rating} />
+                  </Link>
+                </li>
+              ))}
+          </ul>
         </div>
         <div className="right">
           {loading ? (

@@ -7,9 +7,6 @@ function SearchBox(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (!name) {
-      setName(e.target.value === "all");
-    }
     navigate(`/search/name/${name !== "" ? name : "all"}`);
   };
 

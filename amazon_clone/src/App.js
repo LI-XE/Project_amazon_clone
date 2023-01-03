@@ -34,8 +34,18 @@ function App() {
             <Route path="/placeorder" element={<PlaceOrderScreen />}></Route>
             <Route path="/order/:id" element={<OrderScreen />}></Route>
             <Route path="/search/name/:name" element={<SearchScreen />}></Route>
-            <Route path="/search/category/:category" element={<SearchScreen />}></Route>
-            <Route path="/search/category/:category/name/:name" element={<SearchScreen />}></Route>
+            <Route
+              path="/search/category/:category"
+              element={<SearchScreen />}
+            ></Route>
+            <Route
+              path="/search/category/:category/name/:name"
+              element={<SearchScreen />}
+            ></Route>
+            <Route
+              path="/search/category/:category/name/:name/min/:min/max/:max/rating/:rating"
+              element={<SearchScreen />}
+            ></Route>
             <Route
               path="/orderhistory"
               element={<OrderHistoryScreen />}
