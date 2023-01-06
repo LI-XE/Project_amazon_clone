@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { listCategories } from "../actions/productActions";
 import { listProducts } from "../actions/productActions";
 import LoadingBox from "../components/LoadingBox";
@@ -20,8 +20,10 @@ function SearchScreen(props) {
     min = 0,
     max = 0,
     rating = 0,
+    order = "newest",
   } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
   const listCategory = useSelector((state) => state.categoryList);
@@ -40,18 +42,20 @@ function SearchScreen(props) {
         min,
         max,
         rating,
+        order,
       })
     );
     dispatch(listCategories());
-  }, [dispatch, name, category, min, max, rating]);
+  }, [dispatch, name, category, min, max, rating, order]);
 
   const getFilterUrl = (filter) => {
     const filterCategory = filter.category || category;
     const filterName = filter.name || name;
     const filterRating = filter.rating || rating;
+    const sortOrder = filter.order || order;
     const filterMin = filter.min ? filter.min : filter.min === 0 ? 0 : min;
     const filterMax = filter.max ? filter.max : filter.max === 0 ? 0 : max;
-    return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}`;
+    return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/order/${sortOrder}`;
   };
   return (
     <div className="search_screen">
@@ -73,7 +77,7 @@ function SearchScreen(props) {
               <MessageBox variant="danger">{errorCategory}</MessageBox>
             ) : (
               <ul>
-                { listOpen && (
+                {listOpen && (
                   <li>
                     <Link
                       to={getFilterUrl({ category: "all" })}
@@ -83,7 +87,7 @@ function SearchScreen(props) {
                     </Link>
                   </li>
                 )}
-                { listOpen &&
+                {listOpen &&
                   categories?.map((cate) => (
                     <li key={cate._id}>
                       <Link
@@ -164,9 +168,20 @@ function SearchScreen(props) {
               ) : (
                 <>
                   <div className="row results">
-                    <h2>Results </h2>
+                    <h2>Results: ( {products?.length} items )</h2>
                     <div>
-                      <strong>{products?.length} items </strong>
+                      Sort by{" "}
+                      <select
+                        value={order}
+                        onChange={(e) => {
+                          navigate(getFilterUrl({ order: e.target.value }));
+                        }}
+                      >
+                        <option value="newest">Newest Arrivals</option>
+                        <option value="lowest">Price: Low to High</option>
+                        <option value="highest">Price: High to Low</option>
+                        <option value="toprated">Avg. Customer Reviews</option>
+                      </select>
                     </div>
                   </div>
                   <div className="row center">

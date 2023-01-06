@@ -21,8 +21,6 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-
-
 // we need compare the password and confirm password and fail validation
 //		if they do not match
 // we will get the confirmPassword in the request body and we need to
