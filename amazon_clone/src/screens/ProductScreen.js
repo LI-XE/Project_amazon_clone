@@ -25,7 +25,7 @@ export default function ProductScreen(props) {
   const {
     loading: loadingReviewCreate,
     error: errorReviewCreate,
-    success: successReviewCreate,
+    review,
   } = productReviewCreate;
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
@@ -34,14 +34,14 @@ export default function ProductScreen(props) {
   const [comment, setComment] = useState("");
 
   useEffect(() => {
-    if (successReviewCreate) {
+    if (review) {
       alert("Review Submitted Successfully");
       setRating("");
       setComment("");
-      dispatch({ type: PRODUCT_REVIEW_CREATE_RESET });
     }
+    dispatch({ type: PRODUCT_REVIEW_CREATE_RESET, payload: null });
     dispatch(detailsProduct(productId));
-  }, [dispatch, productId, successReviewCreate]);
+  }, [dispatch, productId, review]);
 
   const addToCartHandler = () => {
     console.log(`Product ID: ${productId}`);
@@ -63,6 +63,7 @@ export default function ProductScreen(props) {
   };
 
   console.log({ product });
+  console.log(productReviewCreate);
 
   return (
     <div className="row1">

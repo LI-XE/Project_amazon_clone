@@ -70,6 +70,7 @@ module.exports = {
     Product.findById(req.params.id)
       .then((product) => {
         console.log(product);
+        product.reviews.reverse();
         res.json(product);
       })
       .catch((err) => {
@@ -120,17 +121,20 @@ module.exports = {
               rating: Number(req.body.rating),
               comment: req.body.comment,
             };
+            // if (review) {
             product.reviews.push(review);
             product.numReviews = product.reviews.length;
             product.rating =
               product.reviews.reduce((a, c) => c.rating + a, 0) /
               product.reviews.length;
             console.log(review);
-            const updatedProduct = product.save();
-            res.status(201).json({
-              message: " Review Created. ",
-              review: updatedProduct.reviews,
+            product.save().then((updatedProduct) => {
+              res.status(201).json({
+                message: " Review Created. ",
+                review: updatedProduct.reviews[0],
+              });
             });
+            // }
           }
         }
       })
