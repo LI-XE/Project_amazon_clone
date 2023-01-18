@@ -14,7 +14,7 @@ function Header() {
   const { cartItems } = cart;
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
-  console.log(userInfo);
+  // console.log(userInfo);
   const listCategory = useSelector((state) => state.categoryList);
   const {
     loading: loadingCategory,
@@ -29,8 +29,8 @@ function Header() {
 
   useEffect(() => {
     dispatch(listCategories());
-    console.log(`categories: ${categories}`);
-  }, [dispatch]);
+    // console.log(`categories: ${categories}`);
+  }, [dispatch, categories]);
 
   return (
     <div className="header">
@@ -125,13 +125,37 @@ function Header() {
             )}
           </ul>
         </div>
-
-        <Link to="/orderhistory">
+        {userInfo && userInfo.isAdmin && (
+          <div className="dropdown">
+            <Link to="/signin">
+              <div className="header_option">
+                <span>
+                  Admin <i className="fa fa-caret-down"></i>
+                </span>
+              </div>
+            </Link>
+            <ul className="dropdown-content">
+              <li>
+                <Link to="/admin/dashboard">Dashboard</Link>
+              </li>
+              <li>
+                <Link to="/admin/products">Products</Link>
+              </li>
+              <li>
+                <Link to="/admin/orders">Orders</Link>{" "}
+              </li>
+              <li>
+                <Link to="/admin/users">Users</Link>
+              </li>
+            </ul>
+          </div>
+        )}
+        {/* <Link to="/orderhistory">
           <div className="header_option">
             <span className="header_optionLineOne">Returns</span>
             <span className="header_optionLineTwo">& Orders</span>
           </div>
-        </Link>
+        </Link> */}
         <Link to="/cart">
           <div className="header_optionBasket">
             <ShoppingBasketIcon />
