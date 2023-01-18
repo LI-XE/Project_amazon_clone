@@ -121,7 +121,6 @@ module.exports = {
               rating: Number(req.body.rating),
               comment: req.body.comment,
             };
-            // if (review) {
             product.reviews.push(review);
             product.numReviews = product.reviews.length;
             product.rating =
@@ -131,16 +130,46 @@ module.exports = {
             product.save().then((updatedProduct) => {
               res.status(201).json({
                 message: " Review Created. ",
-                review: updatedProduct.reviews[0],
+                review:
+                  updatedProduct.reviews[updatedProduct.reviews.length - 1],
               });
             });
-            // }
           }
         }
       })
       .catch((err) => {
         console.log(err);
         res.status(404).json({ message: "Product Not Found." });
+      });
+  },
+
+  // product list admin
+  // PAGE_SIZE = 3;
+  productListsAdmin: (req, res) => {
+    const { query } = req;
+    const page = query.page || 1;
+    const pageSize = query.pageSize || 10;
+    Product.find({})
+      .skip(pageSize * (page - 1))
+      .limit(pageSize)
+      .then((products) => {
+        Product.countDocuments().then((countProducts) => {
+          console.log(products);
+          console.log(countProducts);
+          console.log(page);
+          res.status(200).json({
+            products,
+            countProducts,
+            page,
+            pages: Math.ceil(countProducts / pageSize),
+          });
+        });
+
+        // console.log(pages);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(404).json(err);
       });
   },
 };

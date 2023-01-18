@@ -16,6 +16,10 @@ import OrderScreen from "./screens/OrderScreen";
 import OrderHistoryScreen from "./screens/OrderHistoryScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import SearchScreen from "./screens/SearchScreen";
+import ProtectedRoute from "./components/ProtectedRoute";
+import DashboardScreen from "./screens/DashboardScreen";
+import AdminRoute from "./components/AdminRoute";
+import ProductListScreen from "./screens/ProductListScreen";
 
 function App() {
   return (
@@ -32,7 +36,14 @@ function App() {
             <Route path="/shipping" element={<ShippingAddressScreen />}></Route>
             <Route path="/payment" element={<PaymentMethodScreen />}></Route>
             <Route path="/placeorder" element={<PlaceOrderScreen />}></Route>
-            <Route path="/order/:id" element={<OrderScreen />}></Route>
+            <Route
+              path="/order/:id"
+              element={
+                <ProtectedRoute>
+                  <OrderScreen />
+                </ProtectedRoute>
+              }
+            ></Route>
             <Route path="/search/name/:name" element={<SearchScreen />}></Route>
             <Route
               path="/search/category/:category"
@@ -48,14 +59,34 @@ function App() {
             ></Route>
             <Route
               path="/orderhistory"
-              element={<OrderHistoryScreen />}
+              element={
+                <ProtectedRoute>
+                  <OrderHistoryScreen />
+                </ProtectedRoute>
+              }
             ></Route>
             <Route
               path="/profile"
               element={
-                <PrivateRoute>
+                <ProtectedRoute>
                   <ProfileScreen />
-                </PrivateRoute>
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path="/admin/dashboard"
+              element={
+                <AdminRoute>
+                  <DashboardScreen />
+                </AdminRoute>
+              }
+            ></Route>
+            <Route
+              path="/admin/products"
+              element={
+                <AdminRoute>
+                  <ProductListScreen />
+                </AdminRoute>
               }
             ></Route>
           </Routes>

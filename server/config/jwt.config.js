@@ -54,4 +54,14 @@ module.exports = {
       res.status(401).send({ message: "No Token." });
     }
   },
+
+  isAdmin: (req, res, next) => {
+    if (req.user && req.user.isAdmin) {
+      // console.log(req.user)
+      next();
+    } else {
+      console.log(req.user)
+      res.status(401).send({ message: "Invalid Admin Token." });
+    }
+  },
 };
