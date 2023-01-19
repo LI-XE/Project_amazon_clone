@@ -16,6 +16,9 @@ module.exports = function (app) {
     isAdmin,
     ProductController.productListsAdmin
   );
+  // create products
+  app.post("/api/products", isAuth, isAdmin, ProductController.addProduct);
+
   // get one product
   app.get("/api/products/:id", ProductController.getOneProduct);
   // delete

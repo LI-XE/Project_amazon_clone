@@ -172,4 +172,30 @@ module.exports = {
         res.status(404).json(err);
       });
   },
+
+  // create products
+  addProduct: (req, res) => {
+    const newProduct = new Product({
+      name: req.body.name + Date.now(),
+      brand: req.body.brand,
+      category: req.body.category,
+      image: req.body.image,
+      price: req.body.price,
+      countInStock: req.body.countInStock,
+      rating: req.body.rating,
+      numReviews: req.body.numReviews,
+      description: req.body.description,
+    });
+
+    newProduct
+      .save()
+      .then((createProduct) => {
+        console.log(createProduct);
+        res.status(200).json({ message: "Product Created.", createProduct });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.json(err);
+      });
+  },
 };
