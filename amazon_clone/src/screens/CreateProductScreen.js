@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createProduct } from "../actions/productActions";
-import CreateProduct from "../components/CreateProduct";
+import ProductForm from "../components/ProductForm";
 
 function CreateProductScreen() {
   const dispatch = useDispatch();
@@ -38,10 +38,11 @@ function CreateProductScreen() {
   };
   return (
     <div>
-      <CreateProduct
+      <ProductForm
         product={product}
         setProduct={setProduct}
         submitHandler={submitHandler}
+        submitButtonLabel={"Create Product"}
         userInfo={userInfo}
       />
     </div>

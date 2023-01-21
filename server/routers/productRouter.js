@@ -18,6 +18,8 @@ module.exports = function (app) {
   );
   // create products
   app.post("/api/products", isAuth, isAdmin, ProductController.addProduct);
+  // edit products
+  app.put("/api/products/:id/edit", isAuth, isAdmin, ProductController.editProduct);
 
   // get one product
   app.get("/api/products/:id", ProductController.getOneProduct);

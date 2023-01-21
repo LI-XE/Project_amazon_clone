@@ -30,7 +30,7 @@ function Header() {
   useEffect(() => {
     dispatch(listCategories());
     // console.log(`categories: ${categories}`);
-  }, [dispatch, categories]);
+  }, [dispatch]);
 
   return (
     <div className="header">
