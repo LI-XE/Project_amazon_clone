@@ -97,6 +97,17 @@ export default function ProductScreen(props) {
                 <li>
                   Description:<p>{product.description}</p>
                 </li>
+                {userInfo && userInfo.isAdmin ? (
+                  <li>
+                    <Link to={`/products/${product._id}/edit`}>
+                      <button type="submit" className="button primary">
+                        Edit Product
+                      </button>
+                    </Link>
+                  </li>
+                ) : (
+                  ""
+                )}
               </ul>
             </div>
             <div className="col-1">

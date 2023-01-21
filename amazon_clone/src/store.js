@@ -12,6 +12,7 @@ import {
   categoryListReducer,
   productCreateReducer,
   productDetailsReducer,
+  productEditReducer,
   productListAdminReducer,
   productListReducer,
   reviewCreateReducer,
@@ -59,6 +60,7 @@ const reducer = combineReducers({
   orderSummary: getSummaryReducer,
   adminProductList: productListAdminReducer,
   createProduct: productCreateReducer,
+  editProduct: productEditReducer,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

@@ -198,4 +198,22 @@ module.exports = {
         res.json(err);
       });
   },
+
+  // Edit Product
+  editProduct: (req, res) => {
+    console.log("id: " + req.params.id);
+    console.log(req.body);
+    Product.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    })
+      .then((updatedProduct) => {
+        console.log(updatedProduct);
+        res.json({ message: " Product Updated.", product: updatedProduct });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.json(err);
+      });
+  },
 };

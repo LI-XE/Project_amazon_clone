@@ -9,6 +9,9 @@ import {
   PRODUCT_DETAILS_FAIL,
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
+  PRODUCT_EDIT_FAIL,
+  PRODUCT_EDIT_REQUEST,
+  PRODUCT_EDIT_SUCCESS,
   PRODUCT_LIST_ADMIN_FAIL,
   PRODUCT_LIST_ADMIN_REQUEST,
   PRODUCT_LIST_ADMIN_SUCCESS,
@@ -137,3 +140,28 @@ export const createProduct = (product) => async (dispatch, getState) => {
     });
   }
 };
+
+// Edit product
+export const editProduct =
+  (product, productId) => async (dispatch, getState) => {
+    dispatch({ type: PRODUCT_EDIT_REQUEST, payload: productId, product });
+    const {
+      userSignin: { userInfo },
+    } = getState();
+    try {
+      const { data } = await Axios.put(
+        `http://localhost:8000/api/products/${productId}/edit`,
+        product,
+        { headers: { Authorization: `Bearer ${userInfo.token}` } }
+      );
+      dispatch({ type: PRODUCT_EDIT_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: PRODUCT_EDIT_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
