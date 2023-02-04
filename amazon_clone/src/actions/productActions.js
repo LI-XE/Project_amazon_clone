@@ -143,7 +143,7 @@ export const createProduct = (product) => async (dispatch, getState) => {
 
 // Edit product
 export const editProduct =
-  (product, productId) => async (dispatch, getState) => {
+  (productId, product) => async (dispatch, getState) => {
     dispatch({ type: PRODUCT_EDIT_REQUEST, payload: productId, product });
     const {
       userSignin: { userInfo },

@@ -63,7 +63,7 @@ export default function ProductScreen(props) {
   };
 
   console.log({ product });
-  console.log(productReviewCreate);
+  // console.log(productReviewCreate);
 
   return (
     <div className="row1">
@@ -99,7 +99,7 @@ export default function ProductScreen(props) {
                 </li>
                 {userInfo && userInfo.isAdmin ? (
                   <li>
-                    <Link to={`/products/${product._id}/edit`}>
+                    <Link to={`/admin/products/${product._id}/edit`}>
                       <button type="submit" className="button primary">
                         Edit Product
                       </button>

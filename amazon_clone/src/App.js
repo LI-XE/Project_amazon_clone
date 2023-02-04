@@ -92,7 +92,7 @@ function App() {
               }
             ></Route>
             <Route
-              path="/products/create"
+              path="/admin/products/create"
               element={
                 <AdminRoute>
                   <CreateProductScreen />
@@ -100,7 +100,7 @@ function App() {
               }
             ></Route>
             <Route
-              path="/products/:id/edit"
+              path="/admin/products/:id/edit"
               element={
                 <AdminRoute>
                   <EditProductScreen />
