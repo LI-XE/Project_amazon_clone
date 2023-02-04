@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { productListAdmin } from "../actions/productActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 
 function ProductListScreen() {
-  const { search, pathname } = useLocation();
+  const { search } = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const sp = new URLSearchParams(search);
@@ -22,21 +22,18 @@ function ProductListScreen() {
 
   const buttonHandler = () => {
     if (window.confirm("Are you sure to create?")) {
-      navigate("/products/create");
+      navigate("/admin/products/create");
     }
   };
 
+  // const editHandler = (product) => {
+  //   navigate(`/products/${product._id}/edit`);
+  // };
+
   return (
     <div className="row1 adminProducts">
-      <div className="row">
+      <div>
         <h1>Products</h1>
-        <button
-          type="submit"
-          className="primary button"
-          onClick={buttonHandler}
-        >
-          Create Product
-        </button>
       </div>
 
       {loading ? (
@@ -45,6 +42,15 @@ function ProductListScreen() {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <>
+          <div className="creatingbtn">
+            <button
+              type="submit"
+              className="create button"
+              onClick={buttonHandler}
+            >
+              Create Product
+            </button>
+          </div>
           <table className="table">
             <thead>
               <tr>
@@ -53,6 +59,7 @@ function ProductListScreen() {
                 <th>PRICE</th>
                 <th>CATEGORY</th>
                 <th>BRAND</th>
+                <th>ACTIONS</th>
               </tr>
             </thead>
             <tbody>
@@ -65,6 +72,24 @@ function ProductListScreen() {
                   <td>{product.price}</td>
                   <td>{product.category}</td>
                   <td>{product.brand}</td>
+                  <td className="action">
+                    <Link to={`/admin/products/${product._id}/edit`}>
+                    <button
+                      type="submit"
+                      className="button primary"
+                      // onClick={() =>
+                      //   navigate(`/admin/products/${product._id}/edit`)
+                      // }
+                    >
+                      <i className="fa fa-edit"></i>
+                    </button>
+                    </Link>
+                    <Link to={`/products/${product._id}/edit`}>
+                      <button type="submit" className="button red">
+                        <i className="fa fa-trash-o"></i>
+                      </button>
+                    </Link>
+                  </td>
                 </tr>
               ))}
             </tbody>

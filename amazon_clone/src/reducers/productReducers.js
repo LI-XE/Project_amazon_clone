@@ -10,6 +10,7 @@ import {
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_EDIT_FAIL,
   PRODUCT_EDIT_REQUEST,
+  PRODUCT_EDIT_RESET,
   PRODUCT_EDIT_SUCCESS,
   PRODUCT_LIST_ADMIN_FAIL,
   PRODUCT_LIST_ADMIN_REQUEST,
@@ -145,13 +146,16 @@ export const productCreateReducer = (state = {}, action) => {
 export const productEditReducer = (state = {}, action) => {
   switch (action.type) {
     case PRODUCT_EDIT_REQUEST:
-      return { ...state, loading: true };
+      return { loading: true };
 
     case PRODUCT_EDIT_SUCCESS:
-      return { ...state, loading: false, product: action.payload };
+      return { loading: false, product: action.payload };
 
     case PRODUCT_EDIT_FAIL:
-      return { ...state, loading: false, error: action.payload };
+      return { loading: false, error: action.payload };
+
+    case PRODUCT_EDIT_RESET:
+      return {};
 
     default:
       return state;

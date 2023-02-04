@@ -8,12 +8,13 @@ function ProductForm({
   productId,
 }) {
   const inputChange = (e) => {
-    let newProduct = { ...product };
-    newProduct[e.target.id] = e.target.value;
-    setProduct(newProduct);
+    if (product) {
+      let newProduct = { ...product };
+      newProduct[e.target.id] = e.target.value;
+      console.log(newProduct);
+      setProduct(newProduct);
+    }
   };
-
-  console.log(product);
 
   return (
     <div className="createProduct row1">
