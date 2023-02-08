@@ -79,21 +79,6 @@ module.exports = {
       });
   },
 
-  deleteProduct: (req, res) => {
-    console.log("inside deleteProduct");
-    console.log(req.params.id);
-
-    Product.findByIdAndDelete(req.params.id)
-      .then((deletedProduct) => {
-        console.log(deletedProduct);
-        res.json(deletedProduct);
-      })
-      .catch((err) => {
-        console.log(err);
-        res.json(err);
-      });
-  },
-
   // Get Categories
   getCategories: (req, res) => {
     Product.find({})
@@ -210,6 +195,20 @@ module.exports = {
       .then((updatedProduct) => {
         console.log(updatedProduct);
         res.json({ message: " Product Updated.", product: updatedProduct });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.json(err);
+      });
+  },
+
+  // Delete Product
+  deleteProduct: (req, res) => {
+    console.log("id: " + req.params.id);
+    Product.findByIdAndDelete(req.params.id)
+      .then((deletedProduct) => {
+        console.log(deletedProduct);
+        res.json({ message: "Product is deleted.", product: deletedProduct });
       })
       .catch((err) => {
         console.log(err);
