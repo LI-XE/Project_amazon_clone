@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 const path = require("path");
+multer = require("multer");
+const uploadRouter = require("./routers/uploadRouter.js");
 
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
@@ -27,6 +29,28 @@ app.use(cookieParser());
 require("./config/mongoose.config");
 
 // Routes
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename(req, file, cb) {
+    // cb(null, `${Date.now()}.jpg`);
+    // cb(null, file.originalname);
+    cb(null, req.body.name);
+  },
+});
+
+const upload = multer({ storage });
+// console.log(upload);
+app.post("/api/uploads", upload.single("file"), (req, res) => {
+  try {
+    console.log(req.file);
+    return res.status(200).json(`/${req.file.path}`);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 require("./routers/productRouter")(app);
 require("./routers/userRouter")(app);
 require("./routers/orderRouter")(app);
@@ -54,6 +78,8 @@ app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
 });
 
+// const __dirname = path.resolve();
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 const PORT = process.env.MY_PORT || 8000;
 
 app.listen(PORT, () => {

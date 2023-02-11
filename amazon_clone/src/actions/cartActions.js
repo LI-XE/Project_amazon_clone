@@ -7,9 +7,7 @@ import {
 } from "../types/cartTypes";
 
 export const addToCart = (productId, qty) => async (dispatch, getState) => {
-  const { data } = await Axios.get(
-    `http://localhost:8000/api/products/${productId}`
-  );
+  const { data } = await Axios.get(`/products/${productId}`);
   console.log({ data });
   dispatch({
     type: CART_ADD_ITEM,

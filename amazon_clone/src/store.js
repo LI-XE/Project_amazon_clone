@@ -11,6 +11,7 @@ import {
 import {
   categoryListReducer,
   productCreateReducer,
+  productDeleteReducer,
   productDetailsReducer,
   productEditReducer,
   productListAdminReducer,
@@ -61,6 +62,7 @@ const reducer = combineReducers({
   adminProductList: productListAdminReducer,
   createProduct: productCreateReducer,
   editProduct: productEditReducer,
+  productDelete: productDeleteReducer,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
