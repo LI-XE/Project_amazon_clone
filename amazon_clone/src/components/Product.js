@@ -11,13 +11,16 @@ function Product({ product }) {
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  console.log("PF"+ PF)
+
   const addToBasket = () => {
-    if(productId){
+    if (productId) {
       setQty(qty + 1);
-    dispatch(addToCart(productId, qty));
+      dispatch(addToCart(productId, qty));
     }
   };
-  
+
 
   return (
     <div className="card">
@@ -30,7 +33,11 @@ function Product({ product }) {
         <div className="price">${product.price}</div>
       </div>
       <Link to={`/product/${product._id}`}>
-        <img className="medium" src={product.image} alt={product.name} />
+        <img
+          className="medium"
+          src={product.image ? PF + product.image : PF + "NoImage.jpg"}
+          alt={product.name}
+        />
       </Link>
     </div>
   );

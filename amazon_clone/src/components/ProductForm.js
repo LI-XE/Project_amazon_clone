@@ -13,17 +13,14 @@ function ProductForm({
 }) {
   const [loadingUpload, setLoadingUpload] = useState(false);
   const [errorUpload, setErrorUpload] = useState(false);
-  // const [image, setImage] = useState(product.image);
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
 
-  const inputChange = (e, image) => {
+  const newProduct = { ...product };
+
+  const inputChange = (e) => {
     if (product) {
-      let newProduct = { ...product };
       newProduct[e.target.id] = e.target.value;
-      // if (image) {
-      //   newProduct[image] = image;
-      // }
       console.log(newProduct);
       setProduct(newProduct);
     }
@@ -32,14 +29,10 @@ function ProductForm({
   const uploadFileHandler = (e, product) => {
     const file = e.target.files[0];
     const bodyFormData = new FormData();
-    // bodyFormData.append("image", file);
-    // console.log(bodyFormData);
     const fileName = Date.now() + file.name;
 
     bodyFormData.append("name", fileName);
     bodyFormData.append("file", file);
-    // bodyFormData.append("path", file.path);
-    // console.log(bodyFormData);
     setLoadingUpload(true);
 
     try {
@@ -51,25 +44,12 @@ function ProductForm({
           },
         })
         .then((res) => {
-          let newProduct = { ...product };
           newProduct.image = res.data;
           setProduct(newProduct);
-          console.log(newProduct);
         })
         .catch((err) => {
           console.log(err);
         });
-      // console.log(data);
-      // console.log(file);
-      // console.log(fileName);
-      // console.log(bodyFormData);
-
-      // inputChange(image);
-
-      // newProduct.image = data;
-
-      // console.log(newProduct);
-      // setProduct(newProduct);
       setLoadingUpload(false);
     } catch (err) {
       setErrorUpload(err.message);
@@ -131,7 +111,7 @@ function ProductForm({
           <input
             type="file"
             id="imageFile"
-            accept=".png, .jpeg, .jpg"
+            accept=".png, .jpeg, .jpg, webp"
             // label="Choose Image"
             onChange={uploadFileHandler}
           ></input>

@@ -28,6 +28,8 @@ app.use(cookieParser());
 // run the Mongoose connect file
 require("./config/mongoose.config");
 
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+
 // Routes
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -45,7 +47,7 @@ const upload = multer({ storage });
 app.post("/api/uploads", upload.single("file"), (req, res) => {
   try {
     console.log(req.file);
-    return res.status(200).json(`/${req.file.path}`);
+    return res.status(200).json(`/${req.file.filename}`);
   } catch (err) {
     console.log(err);
   }
@@ -62,24 +64,10 @@ app.get("/", (req, res) => {
   res.send("Server is ready ");
 });
 
-// const __dirname = path.resolve();
-// app.use(express.static(path.resolve(__dirname, "amazon_clone", "build")));
-// app.get("*", (req, res) =>
-//   res.sendFile(path.resolve(__dirname, "amazon_clone", "build", "index.html"))
-// );
-
-// app.use(express.static(path.join(path.resolve(), "/amazon_clone/build")));
-
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(path.resolve(), "/amazon_clone/build/index.html"));
-// });
-
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
 });
 
-// const __dirname = path.resolve();
-app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 const PORT = process.env.MY_PORT || 8000;
 
 app.listen(PORT, () => {

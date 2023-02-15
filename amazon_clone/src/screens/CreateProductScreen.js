@@ -14,7 +14,7 @@ function CreateProductScreen() {
     name: "",
     brand: "",
     category: "",
-    image: "/images/product1.webp",
+    image: "",
     price: "",
     countInStock: "",
     rating: 0,

@@ -167,8 +167,8 @@ module.exports = {
       image: req.body.image,
       price: req.body.price,
       countInStock: req.body.countInStock,
-      rating: req.body.rating,
-      numReviews: req.body.numReviews,
+      rating: 0,
+      numReviews: 0,
       description: req.body.description,
     });
 
