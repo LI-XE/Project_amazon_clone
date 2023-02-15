@@ -33,6 +33,8 @@ export default function ProductScreen(props) {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
 
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
   useEffect(() => {
     if (review) {
       alert("Review Submitted Successfully");
@@ -77,7 +79,7 @@ export default function ProductScreen(props) {
           <div className="row top">
             <div className="col-1">
               <img
-                src={product.image}
+                src={PF + product.image}
                 alt={product.name}
                 className="large"
               ></img>

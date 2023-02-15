@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { productListAdmin } from "../actions/productActions";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { deleteProduct, productListAdmin } from "../actions/productActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
+import { PRODUCT_DELETE_RESET } from "../types/productTypes";
 
 function ProductListScreen() {
   const { search } = useLocation();
@@ -14,9 +15,19 @@ function ProductListScreen() {
   const productLists = useSelector((state) => state.adminProductList);
   const { loading, error, products, countProducts, pages } = productLists;
 
+  const productDelete = useSelector((state) => state.productDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = productDelete;
+
   useEffect(() => {
+    if (successDelete) {
+      dispatch({ type: PRODUCT_DELETE_RESET });
+    }
     dispatch(productListAdmin(page));
-  }, [dispatch, page]);
+  }, [dispatch, page, successDelete]);
 
   console.log(countProducts, pages);
 
@@ -26,15 +37,20 @@ function ProductListScreen() {
     }
   };
 
-  // const editHandler = (product) => {
-  //   navigate(`/products/${product._id}/edit`);
-  // };
+  const deleteBtn = (e, product) => {
+    e.preventDefault();
+    if (window.confirm("Are you sure to delete?")) {
+      dispatch(deleteProduct(product._id));
+    }
+  };
 
   return (
     <div className="row1 adminProducts">
       <div>
         <h1>Products</h1>
       </div>
+      {loadingDelete && <LoadingBox></LoadingBox>}
+      {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
 
       {loading ? (
         <LoadingBox></LoadingBox>
@@ -74,21 +90,17 @@ function ProductListScreen() {
                   <td>{product.brand}</td>
                   <td className="action">
                     <Link to={`/admin/products/${product._id}/edit`}>
-                    <button
-                      type="submit"
-                      className="button primary"
-                      // onClick={() =>
-                      //   navigate(`/admin/products/${product._id}/edit`)
-                      // }
-                    >
-                      <i className="fa fa-edit"></i>
-                    </button>
-                    </Link>
-                    <Link to={`/products/${product._id}/edit`}>
-                      <button type="submit" className="button red">
-                        <i className="fa fa-trash-o"></i>
+                      <button type="submit" className="button primary">
+                        <i className="fa fa-edit"></i>
                       </button>
                     </Link>
+                    <button
+                      type="submit"
+                      className="button red"
+                      onClick={(e) => deleteBtn(e, product)}
+                    >
+                      <i className="fa fa-trash-o"></i>
+                    </button>
                   </td>
                 </tr>
               ))}

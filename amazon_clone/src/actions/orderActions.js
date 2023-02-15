@@ -12,6 +12,9 @@ import {
   ORDER_MINE_LIST_REQUEST,
   ORDER_MINE_LIST_FAIL,
   ORDER_MINE_LIST_SUCCESS,
+  ORDER_SUMMARY_REQUEST,
+  ORDER_SUMMARY_SUCCESS,
+  ORDER_SUMMARY_FAIL,
 } from "../types/orderTypes";
 import { CART_EMPTY } from "../types/cartTypes";
 
@@ -21,15 +24,11 @@ export const createOrder = (order) => async (dispatch, getState) => {
     const {
       userSignin: { userInfo },
     } = getState();
-    const { data } = await Axios.post(
-      "http://localhost:8000/api/orders/create",
-      order,
-      {
-        headers: {
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      }
-    );
+    const { data } = await Axios.post("/orders/create", order, {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
     dispatch({ type: ORDER_CREATE_SUCCESS, payload: data.order });
     dispatch({ type: CART_EMPTY });
     localStorage.removeItem("cartItems");
@@ -50,12 +49,9 @@ export const detailsOrder = (orderId) => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = await Axios.get(
-      `http://localhost:8000/api/orders/${orderId}`,
-      {
-        headers: { Authorization: `Bearer ${userInfo.token}` },
-      }
-    );
+    const { data } = await Axios.get(`/orders/${orderId}`, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
     dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     const message =
@@ -74,7 +70,7 @@ export const payOrder =
     } = getState();
     try {
       const { data } = await Axios.put(
-        `http://localhost:8000/api/orders/${order._id}/pay`,
+        `/orders/${order._id}/pay`,
         paymentResult,
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -96,7 +92,7 @@ export const listOrderMine = () => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = await Axios.get("http://localhost:8000/api/orders/mine", {
+    const { data } = await Axios.get("/orders/mine", {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
       },
@@ -108,5 +104,27 @@ export const listOrderMine = () => async (dispatch, getState) => {
         ? error.response.data.message
         : error.message;
     dispatch({ type: ORDER_MINE_LIST_FAIL, payload: message });
+  }
+};
+
+export const getSummary = () => async (dispatch, getState) => {
+  dispatch({ type: ORDER_SUMMARY_REQUEST });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios.get("/orders/summary", {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
+
+    dispatch({ type: ORDER_SUMMARY_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: ORDER_SUMMARY_FAIL, payload: message });
   }
 };
