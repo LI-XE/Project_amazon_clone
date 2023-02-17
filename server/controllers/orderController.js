@@ -49,6 +49,28 @@ module.exports = {
     }
   },
 
+  // summary
+  getOrderSummary: async (req, res) => {
+    const orders = Order.aggregate([
+      {
+        $group: {
+          _id: null,
+          numOrders: { $sum: 1 },
+          totalSales: { $sum: "$totalPrice" },
+        },
+      },
+    ]);
+    const users = User.aggregate([
+      {
+        $group: {
+          _id: null,
+          numUsers: { $sum: 1 },
+        },
+      },
+    ]);
+    res.send({ users, orders });
+  },
+
   // get one order
   getOneOrder: (req, res) => {
     console.log("get One Order");
@@ -82,5 +104,18 @@ module.exports = {
     } else {
       res.status(404).send({ message: "Order Not Found." });
     }
+  },
+
+  // admin orders
+  orders: (req, res) => {
+    const orders = Order.find({})
+      .populate("user", "username")
+      .then((orders) => {
+        res.status(200).send(orders);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(401).send(err);
+      });
   },
 };

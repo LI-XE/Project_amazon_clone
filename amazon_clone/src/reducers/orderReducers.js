@@ -1,4 +1,7 @@
 import {
+  ORDER_SUMMARY_FAIL,
+  ORDER_SUMMARY_REQUEST,
+  ORDER_SUMMARY_SUCCESS,
   ORDER_CREATE_FAIL,
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_RESET,
@@ -13,6 +16,9 @@ import {
   ORDER_PAY_REQUEST,
   ORDER_PAY_RESET,
   ORDER_PAY_SUCCESS,
+  ORDER_LIST_REQUEST,
+  ORDER_LIST_SUCCESS,
+  ORDER_LIST_FAIL,
 } from "../types/orderTypes";
 
 export const orderReducer = (state = {}, action) => {
@@ -80,6 +86,41 @@ export const orderMineListReducer = (state = { orders: [] }, action) => {
       return { loading: false, orders: action.payload };
 
     case ORDER_MINE_LIST_FAIL:
+      return { loading: false, error: action.payload };
+
+    default:
+      return state;
+  }
+};
+
+export const getSummaryReducer = (
+  state = { summary: {}, loading: true, error: "" },
+  action
+) => {
+  switch (action.type) {
+    case ORDER_SUMMARY_REQUEST:
+      return { ...state, loading: true };
+
+    case ORDER_SUMMARY_SUCCESS:
+      return { ...state, loading: false, summary: action.payload };
+
+    case ORDER_SUMMARY_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+    default:
+      return state;
+  }
+};
+
+export const orderListReducer = (state = { orders: [] }, action) => {
+  switch (action.type) {
+    case ORDER_LIST_REQUEST:
+      return { loading: true };
+
+    case ORDER_LIST_SUCCESS:
+      return { loading: false, orders: action.payload };
+
+    case ORDER_LIST_FAIL:
       return { loading: false, error: action.payload };
 
     default:

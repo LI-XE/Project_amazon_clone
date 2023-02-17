@@ -15,6 +15,9 @@ import {
   ORDER_SUMMARY_REQUEST,
   ORDER_SUMMARY_SUCCESS,
   ORDER_SUMMARY_FAIL,
+  ORDER_LIST_REQUEST,
+  ORDER_LIST_SUCCESS,
+  ORDER_LIST_FAIL,
 } from "../types/orderTypes";
 import { CART_EMPTY } from "../types/cartTypes";
 
@@ -126,5 +129,27 @@ export const getSummary = () => async (dispatch, getState) => {
         ? error.response.data.message
         : error.message;
     dispatch({ type: ORDER_SUMMARY_FAIL, payload: message });
+  }
+};
+
+export const listOrders = () => async (dispatch, getState) => {
+  dispatch({ type: ORDER_LIST_REQUEST });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios.get("/orders", {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
+    console.log(data);
+    dispatch({ type: ORDER_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: ORDER_LIST_FAIL, payload: message });
   }
 };
