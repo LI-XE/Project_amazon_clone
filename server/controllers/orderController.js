@@ -118,4 +118,18 @@ module.exports = {
         res.status(401).send(err);
       });
   },
+
+  // Delete Order
+  deleteOrder: (req, res) => {
+    console.log("id: " + req.params.id);
+    Order.findByIdAndDelete(req.params.id)
+      .then((deletedOrder) => {
+        console.log(deletedOrder);
+        res.json({ message: "Order is deleted.", order: deletedOrder });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.json(err);
+      });
+  },
 };

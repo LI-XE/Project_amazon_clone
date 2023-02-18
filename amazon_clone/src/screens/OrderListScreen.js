@@ -1,21 +1,35 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { listOrders } from "../actions/orderActions";
+import { deleteOrder, listOrders } from "../actions/orderActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
+import { ORDER_DELETE_ADMIN_RESET } from "../types/orderTypes";
 
 function OrderListScreen() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const OrderList = useSelector((state) => state.orderList);
   const { loading, error, orders } = OrderList;
-  useEffect(() => {
-    dispatch(listOrders());
-  }, [dispatch]);
+  const orderDelete = useSelector((state) => state.orderDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = orderDelete;
 
-  const deleteHandler = (order) => {
-    //
+  useEffect(() => {
+    if (successDelete) {
+      dispatch({ type: ORDER_DELETE_ADMIN_RESET });
+    }
+    dispatch(listOrders());
+  }, [dispatch, successDelete]);
+
+  const deleteHandler = (e, order) => {
+    e.preventDefault();
+    if (window.confirm("Are you sure to delete?")) {
+      dispatch(deleteOrder(order._id));
+    }
   };
 
   console.log(orders);
@@ -26,6 +40,9 @@ function OrderListScreen() {
         <h1>
           Orders <span>( {orders?.length} orders ) </span>
         </h1>
+        {loadingDelete && <LoadingBox></LoadingBox>}
+        {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
+
         {loading ? (
           <LoadingBox></LoadingBox>
         ) : error ? (
@@ -69,8 +86,8 @@ function OrderListScreen() {
                     <button
                       type="button"
                       className="small"
-                      onClick={() => {
-                        deleteHandler(order);
+                      onClick={(e) => {
+                        deleteHandler(e, order);
                       }}
                     >
                       Delete
