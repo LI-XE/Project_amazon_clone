@@ -62,7 +62,9 @@ export default function ProfileScreen() {
               <MessageBox variant="danger">{errorUpdate}</MessageBox>
             )}
             {successUpdate && (
-              <MessageBox>Profile Updated Successfully</MessageBox>
+              <MessageBox variant="success">
+                Profile Updated Successfully
+              </MessageBox>
             )}
             <div>
               <label htmlFor="email">Email</label>

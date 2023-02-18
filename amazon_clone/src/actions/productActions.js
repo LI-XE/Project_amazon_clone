@@ -145,11 +145,9 @@ export const editProduct =
       userSignin: { userInfo },
     } = getState();
     try {
-      const { data } = await Axios.put(
-        `/products/${productId}/edit`,
-        product,
-        { headers: { Authorization: `Bearer ${userInfo.token}` } }
-      );
+      const { data } = await Axios.put(`/products/${productId}/edit`, product, {
+        headers: { Authorization: `Bearer ${userInfo.token}` },
+      });
       dispatch({ type: PRODUCT_EDIT_SUCCESS, payload: data });
     } catch (error) {
       dispatch({

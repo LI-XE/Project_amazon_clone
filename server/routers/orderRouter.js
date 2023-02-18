@@ -5,6 +5,13 @@ const { authenticate } = require("../config/jwt.config");
 module.exports = function (app) {
   // admin orders
   app.get("/api/orders", isAuth, isAdmin, OrderController.orders);
+  // admin delete orders
+  app.delete(
+    "/api/orders/:id/delete",
+    isAuth,
+    isAdmin,
+    OrderController.deleteOrder
+  );
 
   // my orders
   app.get("/api/orders/mine", isAuth, OrderController.myOrders);
