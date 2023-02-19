@@ -28,7 +28,6 @@ app.use(cookieParser());
 // run the Mongoose connect file
 require("./config/mongoose.config");
 
-app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 // Routes
 const storage = multer.diskStorage({
@@ -63,6 +62,10 @@ app.get("/api/config/paypal", (req, res) => {
 app.get("/", (req, res) => {
   res.send("Server is ready ");
 });
+
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+app.use(express.static(path.join(__dirname, "/amazon_clone/build")))
+app.get("*", (req, res) => res.sendFile(path,join(__dirname, "/amazon_clone/build/index.html")))
 
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
