@@ -1,7 +1,10 @@
 const UserController = require("../controllers/userController");
-const { isAuth } = require("../config/jwt.config");
+const { isAuth, isAdmin } = require("../config/jwt.config");
+const userController = require("../controllers/userController");
 
 module.exports = function (app) {
+  // admin users
+  app.get("/api/users", isAuth, isAdmin, UserController.adminUser);
   // register user
   app.post("/api/users/register", UserController.register);
   // login user
@@ -12,4 +15,5 @@ module.exports = function (app) {
   app.get("/api/users/:id", UserController.getOneUser);
   // get one user
   app.put("/api/users/:id", isAuth, UserController.updateProfile);
+  // admin user
 };

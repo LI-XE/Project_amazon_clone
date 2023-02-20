@@ -53,7 +53,7 @@ module.exports = {
                     ),
                     {
                       httpOnly: true,
-                      expires: new Date(Date.now() + 900000000),
+                      expires: new Date(Date.now() + 900000),
                     }
                   )
                   .json({
@@ -115,9 +115,16 @@ module.exports = {
         _id: updatedUser._id,
         username: updatedUser.username,
         email: updatedUser.email,
-        isAuth: updatedUser.isAuth,
+        isAdmin: updatedUser.isAdmin,
         token: generateToken(updatedUser),
       });
     }
+  },
+
+  // Admin
+  adminUser: (req, res) => {
+    User.find({})
+      .then((users) => res.send(users))
+      .catch((err) => res.send(err));
   },
 };
