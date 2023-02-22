@@ -146,4 +146,23 @@ module.exports = {
         res.json(err);
       });
   },
+
+// Edit User
+editUser: (req, res) => {
+  console.log("id: " + req.params.id);
+  console.log(req.body);
+  User.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  })
+    .then((updatedUser) => {
+      console.log(updatedUser);
+      res.json({ message: "User Updated.", user: updatedUser });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json(err);
+    });
+},
+
 };

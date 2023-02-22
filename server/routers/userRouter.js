@@ -22,4 +22,6 @@ module.exports = function (app) {
     isAdmin,
     UserController.deleteUser
   );
+  //edit user
+  app.put("/api/users/:id/edit", isAuth, isAdmin, UserController.editUser);
 };
