@@ -127,4 +127,23 @@ module.exports = {
       .then((users) => res.send(users))
       .catch((err) => res.send(err));
   },
+
+  // Delete User
+  deleteUser: (req, res) => {
+    console.log("id: " + req.params.id);
+    User.findById(req.params.id)
+      .then((user) => {
+        if (user.email === "bbbbb@gmail.com") {
+          res.status(400).send({ message: "Can Not Delete Admin User." });
+          return;
+        }
+        const deletedUser = user.remove();
+        console.log(deletedUser);
+        res.json({ message: "User is deleted.", user: deletedUser });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.json(err);
+      });
+  },
 };
