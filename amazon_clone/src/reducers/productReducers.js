@@ -153,7 +153,7 @@ export const productEditReducer = (state = {}, action) => {
       return { loadingUpdate: true };
 
     case PRODUCT_EDIT_SUCCESS:
-      return { loadingUpdate: false, product: action.payload };
+      return { loadingUpdate: false, success: true };
 
     case PRODUCT_EDIT_FAIL:
       return { loadingUpdate: false, error: action.payload };

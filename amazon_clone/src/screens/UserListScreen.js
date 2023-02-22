@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { deleteUser, listUsers } from "../actions/userActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import { USER_DELETE_RESET } from "../types/userTypes";
+import { USER_DELETE_RESET, USER_DETAILS_RESET } from "../types/userTypes";
 
 function UserListScreen() {
   const UserList = useSelector((state) => state.userList);
@@ -18,11 +19,9 @@ function UserListScreen() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (loadingDelete) {
-      dispatch({ type: USER_DELETE_RESET });
-    }
     dispatch(listUsers());
-  }, [dispatch, loadingDelete]);
+    dispatch({ type: USER_DETAILS_RESET });
+  }, [dispatch, successDelete]);
 
   console.log(users);
 
@@ -65,9 +64,11 @@ function UserListScreen() {
                 <td>{user.isSeller ? "Yes" : "No"}</td>
                 <td>{user.isAdmin ? "Yes" : "No"}</td>
                 <td>
-                  <button type="button" className="small">
-                    Edit
-                  </button>
+                  <Link to={`/admin/user/${user._id}/edit`}>
+                    <button type="button" className="small">
+                      Edit
+                    </button>
+                  </Link>
                   <button
                     type="button"
                     className="small"
