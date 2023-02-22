@@ -15,5 +15,11 @@ module.exports = function (app) {
   app.get("/api/users/:id", UserController.getOneUser);
   // get one user
   app.put("/api/users/:id", isAuth, UserController.updateProfile);
-  // admin user
+  // delete user
+  app.delete(
+    "/api/users/:id/delete",
+    isAuth,
+    isAdmin,
+    UserController.deleteUser
+  );
 };

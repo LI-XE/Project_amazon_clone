@@ -1,22 +1,45 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { listUsers } from "../actions/userActions";
+import { deleteUser, listUsers } from "../actions/userActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
+import { USER_DELETE_RESET } from "../types/userTypes";
 
 function UserListScreen() {
   const UserList = useSelector((state) => state.userList);
   const { loading, error, users } = UserList;
+  const DeleteUser = useSelector((state) => state.userDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = DeleteUser;
+
   const dispatch = useDispatch();
+
   useEffect(() => {
+    if (loadingDelete) {
+      dispatch({ type: USER_DELETE_RESET });
+    }
     dispatch(listUsers());
-  }, [dispatch]);
+  }, [dispatch, loadingDelete]);
 
   console.log(users);
 
+  const deleteHandler = (user) => {
+    if (window.confirm("Are you sure?")) {
+      dispatch(deleteUser(user._id));
+    }
+  };
+
   return (
     <div>
-      <h1>Users</h1>
+      <h1>Users ( {users?.length} users )</h1>
+      {loadingDelete && <LoadingBox></LoadingBox>}
+      {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
+      {successDelete && (
+        <MessageBox variant="success">User Deleted Successfully</MessageBox>
+      )}
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
@@ -42,8 +65,16 @@ function UserListScreen() {
                 <td>{user.isSeller ? "Yes" : "No"}</td>
                 <td>{user.isAdmin ? "Yes" : "No"}</td>
                 <td>
-                  <button>Edit</button>
-                  <button>Delete</button>
+                  <button type="button" className="small">
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    className="small"
+                    onClick={() => deleteHandler(user)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
