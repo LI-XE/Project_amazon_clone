@@ -26,6 +26,7 @@ module.exports = {
         username: user.username,
         email: user.email,
         isAdmin: user.isAdmin,
+        isSeller: user.isSeller,
       },
       process.env.JWT_SECRET || "somethingsecret",
       { expiresIn: "3d" }
@@ -60,8 +61,28 @@ module.exports = {
       // console.log(req.user)
       next();
     } else {
-      console.log(req.user)
+      console.log(req.user);
       res.status(401).send({ message: "Invalid Admin Token." });
+    }
+  },
+
+  isSeller: (req, res, next) => {
+    if (req.user && req.user.isSeller) {
+      // console.log(req.user)
+      next();
+    } else {
+      console.log(req.user);
+      res.status(401).send({ message: "Invalid Seller Token." });
+    }
+  },
+
+  isSellerOrAdmin: (req, res, next) => {
+    if (req.user && (req.user.isSeller || req.user.isAdmin)) {
+      // console.log(req.user)
+      next();
+    } else {
+      console.log(req.user);
+      res.status(401).send({ message: "Invalid Seller/Admin Token." });
     }
   },
 };

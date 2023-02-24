@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { deleteUser, listUsers } from "../actions/userActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import { USER_DELETE_RESET, USER_DETAILS_RESET } from "../types/userTypes";
+import { USER_DETAILS_RESET } from "../types/userTypes";
 
 function UserListScreen() {
   const UserList = useSelector((state) => state.userList);

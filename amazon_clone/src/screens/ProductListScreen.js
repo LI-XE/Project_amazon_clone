@@ -1,19 +1,23 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import { deleteProduct, productListAdmin } from "../actions/productActions";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { deleteProduct, listProducts } from "../actions/productActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import { PRODUCT_DELETE_RESET } from "../types/productTypes";
 
-function ProductListScreen() {
+function ProductListScreen(props) {
   const { search } = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const sp = new URLSearchParams(search);
   const page = sp.get("page") || 1;
-  const productLists = useSelector((state) => state.adminProductList);
+  const sellerMode = pathname.indexOf("/seller") >= 0;
+  const productLists = useSelector((state) => state.productList);
   const { loading, error, products, countProducts, pages } = productLists;
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
 
   const productDelete = useSelector((state) => state.productDelete);
   const {
@@ -26,11 +30,11 @@ function ProductListScreen() {
     if (successDelete) {
       dispatch({ type: PRODUCT_DELETE_RESET });
     }
-    dispatch(productListAdmin(page));
-  }, [dispatch, page, successDelete]);
+    dispatch(listProducts({ seller: sellerMode ? userInfo._id : "", page }));
+  }, [dispatch, page, sellerMode, successDelete, userInfo._id]);
 
-  console.log(countProducts, pages);
-
+  console.log(products);
+  console.log(countProducts, pages, page);
   const buttonHandler = () => {
     if (window.confirm("Are you sure to create?")) {
       navigate("/admin/products/create");
@@ -111,7 +115,7 @@ function ProductListScreen() {
               <Link
                 className={x + 1 === Number(page) ? "btn text-bold" : " btn"}
                 key={x + 1}
-                to={`/admin/products?page=${x + 1}`}
+                to={`/products?page=${x + 1}`}
               >
                 {x + 1}{" "}
               </Link>

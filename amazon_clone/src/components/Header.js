@@ -125,6 +125,25 @@ function Header() {
             )}
           </ul>
         </div>
+        {userInfo && userInfo.isSeller && (
+          <div className="dropdown">
+            <Link to="/signin">
+              <div className="header_option">
+                <span>
+                  Seller <i className="fa fa-caret-down"></i>
+                </span>
+              </div>
+            </Link>
+            <ul className="dropdown-content">
+              <li>
+                <Link to="/products/seller">Products</Link>
+              </li>
+              <li>
+                <Link to="/orders/seller">Orders</Link>{" "}
+              </li>
+            </ul>
+          </div>
+        )}
         {userInfo && userInfo.isAdmin && (
           <div className="dropdown">
             <Link to="/signin">
@@ -139,10 +158,10 @@ function Header() {
                 <Link to="/admin/dashboard">Dashboard</Link>
               </li>
               <li>
-                <Link to="/admin/products">Products</Link>
+                <Link to="/products">Products</Link>
               </li>
               <li>
-                <Link to="/admin/orders">Orders</Link>{" "}
+                <Link to="/orders">Orders</Link>{" "}
               </li>
               <li>
                 <Link to="/admin/users">Users</Link>

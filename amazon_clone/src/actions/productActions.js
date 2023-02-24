@@ -27,15 +27,25 @@ import {
 } from "../types/productTypes";
 
 export const listProducts =
-  ({ name = "", category = "", order = "", min = 0, max = 0, rating = 0 }) =>
+  ({
+    page = "",
+    seller = "",
+    name = "",
+    category = "",
+    order = "",
+    min = 0,
+    max = 0,
+    rating = 0,
+  }) =>
   async (dispatch) => {
     dispatch({
       type: PRODUCT_LIST_REQUEST,
     });
     try {
       const { data } = await Axios.get(
-        `/products?name=${name}&category=${category}&min=${min}&max=${max}&rating=${rating}&order=${order}`
+        `/products?page=${page}&seller=${seller}&name=${name}&category=${category}&min=${min}&max=${max}&rating=${rating}&order=${order}`
       );
+      console.log(data);
       dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
     } catch (error) {
       dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message });
@@ -95,26 +105,30 @@ export const createReview =
     }
   };
 
-export const productListAdmin = (page) => async (dispatch, getState) => {
-  dispatch({ type: PRODUCT_LIST_ADMIN_REQUEST });
-  const {
-    userSignin: { userInfo },
-  } = getState();
-  try {
-    const { data } = await Axios.get(`/products/admin?page=${page}`, {
-      headers: { Authorization: `Bearer ${userInfo.token}` },
-    });
-    dispatch({ type: PRODUCT_LIST_ADMIN_SUCCESS, payload: data });
-  } catch (error) {
-    dispatch({
-      type: PRODUCT_LIST_ADMIN_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+export const productListAdmin =
+  (seller, page) => async (dispatch, getState) => {
+    dispatch({ type: PRODUCT_LIST_ADMIN_REQUEST });
+    const {
+      userSignin: { userInfo },
+    } = getState();
+    try {
+      const { data } = await Axios.get(
+        `/products/admin?seller=${seller}&page=${page}`,
+        {
+          headers: { Authorization: `Bearer ${userInfo.token}` },
+        }
+      );
+      dispatch({ type: PRODUCT_LIST_ADMIN_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: PRODUCT_LIST_ADMIN_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const createProduct = (product) => async (dispatch, getState) => {
   dispatch({ type: PRODUCT_CREATE_REQUEST, payload: product });

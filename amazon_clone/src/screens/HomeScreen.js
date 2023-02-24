@@ -16,7 +16,7 @@ export default function HomeScreen() {
   const { cartItems } = cart;
 
   useEffect(() => {
-    dispatch(listProducts("all"));
+    dispatch(listProducts({}));
   }, [dispatch]);
 
   return (

@@ -3,7 +3,6 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import PrivateRoute from "./components/PrivateRoute";
 import HomeScreen from "./screens/HomeScreen";
 import CartScreen from "./screens/CartScreen";
 import ProductScreen from "./screens/ProductScreen";
@@ -25,6 +24,7 @@ import EditProductScreen from "./screens/EditProductScreen";
 import OrderListScreen from "./screens/OrderListScreen";
 import UserListScreen from "./screens/UserListScreen";
 import UserEditScreen from "./screens/UserEditScreen";
+import SellerRoute from "./components/SelllerRoute";
 
 function App() {
   return (
@@ -87,12 +87,13 @@ function App() {
               }
             ></Route>
             <Route
-              path="/admin/products"
+              path="/products"
               element={
                 <AdminRoute>
                   <ProductListScreen />
                 </AdminRoute>
               }
+              exact
             ></Route>
             <Route
               path="/admin/products/create"
@@ -127,11 +128,28 @@ function App() {
               }
             ></Route>
             <Route
-              path="/admin/orders"
+              path="/orders"
               element={
                 <AdminRoute>
                   <OrderListScreen />
                 </AdminRoute>
+              }
+              exact
+            ></Route>
+            <Route
+              path="/products/seller"
+              element={
+                <SellerRoute>
+                  <ProductListScreen />
+                </SellerRoute>
+              }
+            ></Route>
+            <Route
+              path="/orders/seller"
+              element={
+                <SellerRoute>
+                  <OrderListScreen />
+                </SellerRoute>
               }
             ></Route>
           </Routes>
