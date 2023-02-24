@@ -1,5 +1,5 @@
 const ProductController = require("../controllers/productController");
-const { isAuth, isAdmin } = require("../config/jwt.config");
+const { isAuth, isAdmin, isSellerOrAdmin } = require("../config/jwt.config");
 
 module.exports = function (app) {
   // create products
@@ -15,18 +15,23 @@ module.exports = function (app) {
   app.get(
     "/api/products/admin",
     isAuth,
-    isAdmin,
+    isSellerOrAdmin,
     ProductController.productListsAdmin
   );
 
   // create products
-  app.post("/api/products", isAuth, isAdmin, ProductController.addProduct);
+  app.post(
+    "/api/products",
+    isAuth,
+    isSellerOrAdmin,
+    ProductController.addProduct
+  );
 
   // edit products
   app.put(
     "/api/products/:id/edit",
     isAuth,
-    isAdmin,
+    isSellerOrAdmin,
     ProductController.editProduct
   );
 
@@ -37,7 +42,7 @@ module.exports = function (app) {
   app.delete(
     "/api/products/:id",
     isAuth,
-    isAdmin,
+    isSellerOrAdmin,
     ProductController.deleteProduct
   );
 

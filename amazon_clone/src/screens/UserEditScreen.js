@@ -7,8 +7,6 @@ import MessageBox from "../components/MessageBox";
 import { USER_UPDATE_RESET } from "../types/userTypes";
 
 function UserEditScreen(props) {
-  const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo } = userSignin;
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, user, error } = userDetails;
   const UserUpdate = useSelector((state) => state.userUpdate);

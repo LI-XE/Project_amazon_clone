@@ -20,6 +20,7 @@ module.exports = {
           username: newUser.username,
           email: newUser.email,
           isAdmin: newUser.isAdmin,
+          isSeller: newUser.isSeller,
           token: generateToken(newUser),
         });
       })
@@ -61,6 +62,8 @@ module.exports = {
                     username: user.username,
                     email: user.email,
                     _id: user._id,
+                    isAdmin: user.isAdmin,
+                    isSeller: user.isSeller,
                     token: generateToken(user),
                   });
               } else {
@@ -93,6 +96,8 @@ module.exports = {
           _id: oneUser._id,
           username: oneUser.username,
           email: oneUser.email,
+          isAdmin: oneUser.isAdmin,
+          isSeller: oneUser.isSeller,
         });
         // console.log(oneUser.id);
       })
@@ -107,6 +112,12 @@ module.exports = {
     if (user) {
       user.username = req.body.username || user.username;
       user.email = req.body.email || user.email;
+      if (user.isSeller) {
+        user.seller.name = req.body.sellerName || user.seller.name;
+        user.seller.logo = req.body.sellerLogo || user.seller.logo;
+        user.seller.description =
+          req.body.sellerDescription || user.seller.description;
+      }
       if (req.body.password) {
         user.password = bcrypt.hashSync(req.body.password, 8);
       }
@@ -116,6 +127,7 @@ module.exports = {
         username: updatedUser.username,
         email: updatedUser.email,
         isAdmin: updatedUser.isAdmin,
+        isSeller: updatedUser.isSeller,
         token: generateToken(updatedUser),
       });
     }
@@ -147,22 +159,21 @@ module.exports = {
       });
   },
 
-// Edit User
-editUser: (req, res) => {
-  console.log("id: " + req.params.id);
-  console.log(req.body);
-  User.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  })
-    .then((updatedUser) => {
-      console.log(updatedUser);
-      res.json({ message: "User Updated.", user: updatedUser });
+  // Edit User
+  editUser: (req, res) => {
+    console.log("id: " + req.params.id);
+    console.log(req.body);
+    User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
     })
-    .catch((err) => {
-      console.log(err);
-      res.json(err);
-    });
-},
-
+      .then((updatedUser) => {
+        console.log(updatedUser);
+        res.json({ message: "User Updated.", user: updatedUser });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.json(err);
+      });
+  },
 };

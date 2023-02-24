@@ -19,6 +19,9 @@ module.exports = {
   // get all products
   products: (req, res) => {
     console.log("All Products List");
+    const page = req.query.page || 1;
+    const pageSize = req.query.pageSize || 10;
+    const seller = req.query.seller || "";
     const name = req.query.name || "";
     const category = req.query.category || "";
     const order = req.query.order || "";
@@ -31,6 +34,7 @@ module.exports = {
         ? Number(req.query.rating)
         : 0;
 
+    const sellerFilter = seller ? { seller } : {};
     const nameFilter = name ? { name: { $regex: name, $options: "i" } } : {};
     const categoryFilter = category ? { category } : {};
     const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
@@ -45,16 +49,34 @@ module.exports = {
         : { _id: -1 };
 
     Product.find({
+      ...sellerFilter,
       ...nameFilter,
       ...categoryFilter,
       ...priceFilter,
       ...ratingFilter,
     })
-      // .populate("seller", "seller.name seller.logo")
+      .populate("seller", "seller.name seller.logo")
       .sort(sortOrder)
-      .then((allProducts) => {
-        console.log(allProducts);
-        res.json(allProducts);
+      .skip(pageSize * (page - 1))
+      .limit(pageSize)
+      .then((products) => {
+        Product.countDocuments({
+          ...sellerFilter,
+          ...nameFilter,
+          ...categoryFilter,
+          ...priceFilter,
+          ...ratingFilter,
+        }).then((countProducts) => {
+          console.log(products);
+          console.log(countProducts);
+          console.log(page);
+          res.status(200).json({
+            products,
+            countProducts,
+            page,
+            pages: Math.ceil(countProducts / pageSize),
+          });
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -134,7 +156,9 @@ module.exports = {
     const { query } = req;
     const page = query.page || 1;
     const pageSize = query.pageSize || 10;
-    Product.find({})
+    const seller = req.query.seller || "";
+    const sellerFilter = seller ? { seller } : {};
+    Product.find({ ...sellerFilter })
       .skip(pageSize * (page - 1))
       .limit(pageSize)
       .then((products) => {
@@ -162,6 +186,7 @@ module.exports = {
   addProduct: (req, res) => {
     const newProduct = new Product({
       name: req.body.name + Date.now(),
+      seller: req.user._id,
       brand: req.body.brand,
       category: req.body.category,
       image: req.body.image,
