@@ -32,8 +32,8 @@ function SearchScreen(props) {
     error: errorCategory,
     categories,
   } = listCategory;
-  console.log(listCategory);
-  console.log(name);
+  console.log(categories);
+  // console.log(name);
   useEffect(() => {
     dispatch(
       listProducts({

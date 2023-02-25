@@ -1,10 +1,9 @@
 const OrderController = require("../controllers/orderController");
-const { isAuth, isAdmin } = require("../config/jwt.config");
-const { authenticate } = require("../config/jwt.config");
+const { isAuth, isAdmin, isSellerOrAdmin } = require("../config/jwt.config");
 
 module.exports = function (app) {
   // admin orders
-  app.get("/api/orders", isAuth, isAdmin, OrderController.orders);
+  app.get("/api/orders", isAuth, isSellerOrAdmin, OrderController.orders);
   // admin delete orders
   app.delete(
     "/api/orders/:id/delete",
@@ -28,4 +27,6 @@ module.exports = function (app) {
   app.get("/api/orders/:id", OrderController.getOneOrder);
   // get order paid
   app.put("/api/orders/:id/pay", isAuth, OrderController.orderPay);
+  // get order delivered
+  app.put("/api/orders/:id/deliver", isAuth, OrderController.orderDeliver);
 };

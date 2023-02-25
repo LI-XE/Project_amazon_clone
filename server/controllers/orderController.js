@@ -27,6 +27,7 @@ module.exports = {
       res.status(400).send({ message: "Cart is empty" });
     } else {
       const newOrder = new Order({
+        seller: req.body.orderItems[0].seller,
         orderItems: req.body.orderItems,
         shippingAddress: req.body.shippingAddress,
         paymentMethod: req.body.paymentMethod,
@@ -68,7 +69,25 @@ module.exports = {
         },
       },
     ]);
-    res.send({ users, orders });
+    const dailyOrders = await Order.aggregate([
+      {
+        $group: {
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+          orders: { $sum: 1 },
+          sales: { $sum: "$totalPrice" },
+        },
+      },
+      { $sort: { _id: 1 } },
+    ]);
+    const productCategories = await Product.aggregate([
+      {
+        $group: {
+          _id: "$category",
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+    res.send({ users, orders, dailyOrders, productCategories });
   },
 
   // get one order
@@ -106,9 +125,25 @@ module.exports = {
     }
   },
 
+  // get order delivered
+  orderDeliver: (req, res) => {
+    const order = Order.findById(req.params.id);
+    if (order) {
+      order.isDelivered = true;
+      order.deliveredAt = Date.now();
+
+      const updatedOrder = order.save();
+      res.send({ message: "Order Delivered", updatedOrder });
+    } else {
+      res.status(404).send({ message: "Order Not Found." });
+    }
+  },
+
   // admin orders
   orders: (req, res) => {
-    const orders = Order.find({})
+    const seller = req.query.seller || "";
+    const sellerFilter = seller ? { seller } : "";
+    const orders = Order.find({ ...sellerFilter })
       .populate("user", "username")
       .then((orders) => {
         res.status(200).send(orders);
