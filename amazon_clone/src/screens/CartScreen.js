@@ -16,6 +16,8 @@ export default function CartScreen(props) {
   const { search } = useLocation();
   const qty = search ? Number(search.split("=")[1]) : 1;
 
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
   // console.log({ productId, qty, qtyParam: Number(searchParms.get("qty")) });
 
   const cart = useSelector((state) => state.cart);
@@ -52,7 +54,7 @@ export default function CartScreen(props) {
                 <div className="row top">
                   <div>
                     <img
-                      src={item.image}
+                      src={PF + item.image}
                       alt={item.name}
                       className="small"
                     ></img>

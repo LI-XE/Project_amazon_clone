@@ -1,7 +1,7 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { generateToken, isAuth } = require("../config/jwt.config");
+const { generateToken } = require("../config/jwt.config");
 const orderController = require("./orderController");
 const { update } = require("../models/userModel");
 
