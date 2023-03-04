@@ -19,8 +19,8 @@ module.exports = {
   // get all products
   products: (req, res) => {
     console.log("All Products List");
-    const page = req.query.page || 1;
-    const pageSize = req.query.pageSize || 10;
+    const page = Number(req.query.pageNum) || 1;
+    const pageSize = 10;
     const seller = req.query.seller || "";
     const name = req.query.name || "";
     const category = req.query.category || "";
@@ -47,6 +47,14 @@ module.exports = {
         : order === "toprated"
         ? { rating: -1 }
         : { _id: -1 };
+
+    const countProducts = Product.count({
+      ...sellerFilter,
+      ...nameFilter,
+      ...categoryFilter,
+      ...priceFilter,
+      ...ratingFilter,
+    });
 
     Product.find({
       ...sellerFilter,

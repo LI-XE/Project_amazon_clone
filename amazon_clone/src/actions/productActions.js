@@ -28,7 +28,7 @@ import {
 
 export const listProducts =
   ({
-    page = "",
+    pageNum = "",
     seller = "",
     name = "",
     category = "",
@@ -43,7 +43,7 @@ export const listProducts =
     });
     try {
       const { data } = await Axios.get(
-        `/products?page=${page}&seller=${seller}&name=${name}&category=${category}&min=${min}&max=${max}&rating=${rating}&order=${order}`
+        `/products?pageNum=${pageNum}&seller=${seller}&name=${name}&category=${category}&min=${min}&max=${max}&rating=${rating}&order=${order}`
       );
       console.log(data);
       dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });

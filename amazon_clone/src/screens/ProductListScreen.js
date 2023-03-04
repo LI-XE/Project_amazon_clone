@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { deleteProduct, listProducts } from "../actions/productActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import { PRODUCT_DELETE_RESET } from "../types/productTypes";
 
 function ProductListScreen(props) {
+  const { pageNum = 1 } = useParams();
   const { search } = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ function ProductListScreen(props) {
       dispatch({ type: PRODUCT_DELETE_RESET });
     }
     dispatch(listProducts({ seller: sellerMode ? userInfo._id : "", page }));
-  }, [dispatch, page, sellerMode, successDelete, userInfo._id]);
+  }, [dispatch, page, sellerMode, successDelete, userInfo._id, pageNum]);
 
   console.log(products);
   console.log(countProducts, pages, page);
@@ -110,14 +111,14 @@ function ProductListScreen(props) {
               ))}
             </tbody>
           </table>
-          <div className="pages">
+          <div className="row center pagination">
             {[...Array(pages).keys()].map((x) => (
               <Link
-                className={x + 1 === Number(page) ? "btn text-bold" : " btn"}
+                className={x + 1 === page ? "active" : ""}
                 key={x + 1}
                 to={`/products?page=${x + 1}`}
               >
-                {x + 1}{" "}
+                {x + 1}
               </Link>
             ))}
           </div>
