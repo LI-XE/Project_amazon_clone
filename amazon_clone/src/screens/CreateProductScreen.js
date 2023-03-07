@@ -28,7 +28,7 @@ function CreateProductScreen() {
         alert("Product created successfully.");
         dispatch(createProduct(product));
         console.log(product);
-        navigate("/admin/products");
+        navigate("/products");
       } else {
         alert("Please complete the form.");
       }

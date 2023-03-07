@@ -12,7 +12,7 @@ function Product({ product }) {
   const { cartItems } = cart;
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  console.log("PF"+ PF)
+  console.log("PF" + PF);
 
   const addToBasket = () => {
     if (productId) {
@@ -20,7 +20,6 @@ function Product({ product }) {
       dispatch(addToCart(productId, qty));
     }
   };
-
 
   return (
     <div className="card">
@@ -30,7 +29,14 @@ function Product({ product }) {
         </Link>
         <h2>{product.brand}</h2>
         <Rating rating={product.rating} numReviews={product.numReviews} />
-        <div className="price">${product.price}</div>
+        <div className="row">
+          <div className="price">${product.price}</div>
+          <div>
+            <Link to={`/seller/${product.seller?._id}`}>
+              {product.seller?.seller.name}
+            </Link>
+          </div>
+        </div>
       </div>
       <Link to={`/product/${product._id}`}>
         <img
