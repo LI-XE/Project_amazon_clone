@@ -25,6 +25,7 @@ import OrderListScreen from "./screens/OrderListScreen";
 import UserListScreen from "./screens/UserListScreen";
 import UserEditScreen from "./screens/UserEditScreen";
 import SellerRoute from "./components/SelllerRoute";
+import SellerScreen from "./screens/SellerScreen";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <div className="container">
           <Routes>
             <Route path="/" element={<HomeScreen />} exact></Route>
+            <Route path="/seller/:id" element={<SellerScreen />}></Route>
             <Route path="/cart" element={<CartScreen />} exact></Route>
             <Route path="/product/:id" element={<ProductScreen />}></Route>
             <Route path="/signin" element={<SigninScreen />}></Route>
@@ -59,7 +61,7 @@ function App() {
               element={<SearchScreen />}
             ></Route>
             <Route
-              path="/search/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order"
+              path="/search/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order/pageNum/:pageNum"
               element={<SearchScreen />}
             ></Route>
             <Route

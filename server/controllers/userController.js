@@ -98,6 +98,7 @@ module.exports = {
           email: oneUser.email,
           isAdmin: oneUser.isAdmin,
           isSeller: oneUser.isSeller,
+          seller: oneUser.seller,
         });
         // console.log(oneUser.id);
       })
@@ -128,6 +129,7 @@ module.exports = {
         email: updatedUser.email,
         isAdmin: updatedUser.isAdmin,
         isSeller: updatedUser.isSeller,
+        seller: updatedUser.seller,
         token: generateToken(updatedUser),
       });
     }

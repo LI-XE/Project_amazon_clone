@@ -98,6 +98,10 @@ module.exports = {
     console.log(req.params.id);
 
     Product.findById(req.params.id)
+      .populate(
+        "seller",
+        "seller.name seller.logo seller.rating seller.numReviews"
+      )
       .then((product) => {
         console.log(product);
         product.reviews.reverse();
