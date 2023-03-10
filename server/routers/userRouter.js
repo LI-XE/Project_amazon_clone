@@ -3,6 +3,8 @@ const { isAuth, isAdmin } = require("../config/jwt.config");
 const userController = require("../controllers/userController");
 
 module.exports = function (app) {
+  // top sellers
+  app.get("/api/users/top-sellers", UserController.topSellers);
   // admin users
   app.get("/api/users", isAuth, isAdmin, UserController.adminUser);
   // register user

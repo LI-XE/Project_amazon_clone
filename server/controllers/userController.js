@@ -6,6 +6,16 @@ const orderController = require("./orderController");
 const { update } = require("../models/userModel");
 
 module.exports = {
+  topSellers: (req, res) => {
+    User.find({ isSeller: true })
+      .sort({ "seller.rating": -1 })
+      .limit(3)
+      .then((topSellers) => {
+        res.send(topSellers);
+      })
+      .catch((err) => res.send(err));
+  },
+
   register: (req, res) => {
     const user = new User(req.body);
 
