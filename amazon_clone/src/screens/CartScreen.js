@@ -21,7 +21,7 @@ export default function CartScreen(props) {
   // console.log({ productId, qty, qtyParam: Number(searchParms.get("qty")) });
 
   const cart = useSelector((state) => state.cart);
-  const { cartItems } = cart;
+  const { cartItems, error } = cart;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -43,6 +43,7 @@ export default function CartScreen(props) {
     <div className="row" id="cart">
       <div className="col-2">
         <h1>Shopping Cart</h1>
+        {error && <MessageBox variant="danger">{error}</MessageBox>}
         {cartItems.length === 0 ? (
           <MessageBox>
             Cart is empty. <Link to="/">Go Shopping</Link>
