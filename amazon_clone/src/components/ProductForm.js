@@ -37,7 +37,7 @@ function ProductForm({
 
     try {
       axios
-        .post("/uploads", bodyFormData, {
+        .post("/uploads/s3", bodyFormData, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${userInfo.token}`,
@@ -45,6 +45,7 @@ function ProductForm({
         })
         .then((res) => {
           newProduct.image = res.data;
+          console.log(res.data);
           setProduct(newProduct);
         })
         .catch((err) => {
@@ -111,6 +112,7 @@ function ProductForm({
           <input
             type="file"
             id="imageFile"
+            name="file"
             accept=".png, .jpeg, .jpg, webp"
             // label="Choose Image"
             onChange={uploadFileHandler}

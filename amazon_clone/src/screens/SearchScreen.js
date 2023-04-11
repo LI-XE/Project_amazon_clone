@@ -26,7 +26,7 @@ function SearchScreen(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const productList = useSelector((state) => state.productList);
-  const { loading, error, products, pages, page } = productList;
+  const { loading, error, products, pages, page, allProducts } = productList;
   const listCategory = useSelector((state) => state.categoryList);
   const {
     loading: loadingCategory,
@@ -150,7 +150,7 @@ function SearchScreen(props) {
                   <Link
                     to={getFilterUrl({ rating: r.rating })}
                     className={
-                      r.rating === rating ? "active" : "" ? "active" : ""
+                      r.rating === rating ? "active" : "" 
                     }
                   >
                     <Rating caption={" & up "} rating={r.rating} />
@@ -171,7 +171,7 @@ function SearchScreen(props) {
               ) : (
                 <>
                   <div className="row results">
-                    <h2>Results: ( {products?.length} items )</h2>
+                    <h2>Results: ( {allProducts?.length} items )</h2>
                     <div>
                       Sort by{" "}
                       <select
