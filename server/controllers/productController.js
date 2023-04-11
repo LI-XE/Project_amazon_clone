@@ -64,27 +64,41 @@ module.exports = {
       ...ratingFilter,
     })
       .populate("seller", "seller.name seller.logo")
-      .sort(sortOrder)
-      .skip(pageSize * (page - 1))
-      .limit(pageSize)
-      .then((products) => {
-        Product.countDocuments({
+      .then((allProducts) => {
+        Product.find({
           ...sellerFilter,
           ...nameFilter,
           ...categoryFilter,
           ...priceFilter,
           ...ratingFilter,
-        }).then((countProducts) => {
-          console.log(products);
-          console.log(countProducts);
-          console.log(page);
-          res.status(200).json({
-            products,
-            countProducts,
-            page,
-            pages: Math.ceil(countProducts / pageSize),
+        })
+        .populate("seller", "seller.name seller.logo")
+          .sort(sortOrder)
+          .skip(pageSize * (page - 1))
+          .limit(pageSize)
+          .then((products) => {
+            Product.countDocuments({
+              ...sellerFilter,
+              ...nameFilter,
+              ...categoryFilter,
+              ...priceFilter,
+              ...ratingFilter,
+            }).then((countProducts) => {
+              console.log(products);
+              console.log(countProducts);
+              console.log(page);
+              res.status(200).json({
+                allProducts,
+                products,
+                countProducts,
+                page,
+                pages: Math.ceil(countProducts / pageSize),
+              });
+            });
+          })
+          .catch((err) => {
+            console.log(err);
           });
-        });
       })
       .catch((err) => {
         console.log(err);

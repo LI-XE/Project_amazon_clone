@@ -31,7 +31,7 @@ function ProductListScreen(props) {
     if (successDelete) {
       dispatch({ type: PRODUCT_DELETE_RESET });
     }
-    dispatch(listProducts({ seller: sellerMode ? userInfo._id : "", page }));
+    dispatch(listProducts({ seller: sellerMode ? userInfo._id : "", pageNum: page }));
   }, [dispatch, page, sellerMode, successDelete, userInfo._id, pageNum]);
 
   console.log(products);

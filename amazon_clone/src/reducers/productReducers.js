@@ -29,7 +29,7 @@ import {
 } from "../types/productTypes";
 
 export const productListReducer = (
-  state = { loading: true, products: [] },
+  state = { loading: true, products: [], allProducts: [] },
   action
 ) => {
   switch (action.type) {
@@ -39,6 +39,7 @@ export const productListReducer = (
     case PRODUCT_LIST_SUCCESS:
       return {
         loading: false,
+        allProducts: action.payload.allProducts,
         products: action.payload.products,
         countProducts: action.payload.countProducts,
         page: action.payload.page,

@@ -34,60 +34,64 @@ function Header() {
 
   return (
     <div className="header">
-      <Link to="/">
-        <img
-          className="header_logo"
-          src="http://pngimg.com/uploads/amazon/amazon_PNG11.png"
-          alt=""
-        />
-      </Link>
-      <div>
-        <button
-          type="button"
-          className="sidebar_btn"
-          onClick={() => setSidebarIsOpen(true)}
-        >
-          <i className="fa fa-bars"></i>
-        </button>
+      <div className="row head_left">
+        <Link to="/">
+          <img
+            className="header_logo"
+            src="http://pngimg.com/uploads/amazon/amazon_PNG11.png"
+            alt=""
+          />
+        </Link>
+        <div>
+          <button
+            type="button"
+            className="sidebar_btn"
+            onClick={() => setSidebarIsOpen(true)}
+          >
+            <i className="fa fa-bars"></i>
+          </button>
+        </div>
+        <aside className={sidebarIsOpen ? "open" : ""}>
+          <button
+            className="sidebar_close"
+            onClick={() => setSidebarIsOpen(false)}
+            type="button"
+          >
+            <i className="fa fa-close"></i>
+          </button>
+          <ul>
+            <strong>Categories</strong>
+            {loadingCategory ? (
+              <LoadingBox />
+            ) : errorCategory ? (
+              <MessageBox variant="danger">{errorCategory}</MessageBox>
+            ) : (
+              categories?.map((cate) => (
+                <li key={cate._id}>
+                  <Link
+                    to={`/search/category/${cate}`}
+                    onClick={() => setSidebarIsOpen(false)}
+                  >
+                    {cate}
+                  </Link>
+                </li>
+              ))
+            )}
+          </ul>
+        </aside>
       </div>
-      <aside className={sidebarIsOpen ? "open" : ""}>
-        <button
-          className="sidebar_close"
-          onClick={() => setSidebarIsOpen(false)}
-          type="button"
-        >
-          <i className="fa fa-close"></i>
-        </button>
-        <ul>
-          <strong>Categories</strong>
-          {loadingCategory ? (
-            <LoadingBox />
-          ) : errorCategory ? (
-            <MessageBox variant="danger">{errorCategory}</MessageBox>
-          ) : (
-            categories?.map((cate) => (
-              <li key={cate._id}>
-                <Link
-                  to={`/search/category/${cate}`}
-                  onClick={() => setSidebarIsOpen(false)}
-                >
-                  {cate}
-                </Link>
-              </li>
-            ))
-          )}
-        </ul>
-      </aside>
+
       {/* <div className="header_search">
         <input className="header_searchInput" type="text" />
         <button>
           <SearchIcon className="header_searchIcon" />
         </button>
       </div> */}
-      <div className="header_search">
-        <SearchBox />
-      </div>
+
       <div className="header_nav">
+        <div className="header_search">
+          <SearchBox />
+        </div>
         <div className="dropdown">
           <Link to="/signin">
             <div className="header_option">

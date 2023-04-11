@@ -9,7 +9,7 @@ import SlideShow from "../components/SlideShow";
 export default function HomeScreen() {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
-  const { loading, error, products } = productList;
+  const { loading, error, products, page, allProducts } = productList;
 
   const [qty, setQty] = useState();
   const cart = useSelector((state) => state.cart);
@@ -37,7 +37,7 @@ export default function HomeScreen() {
           />
           {products?.length === 0 && <MessageBox>No Product Found</MessageBox>}
           <div className="row center">
-            {products?.map((product, key) => (
+            {allProducts?.map((product, key) => (
               <Product key={product._id} product={product} />
             ))}
           </div>
