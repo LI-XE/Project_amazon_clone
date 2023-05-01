@@ -32,7 +32,7 @@ function UserListScreen() {
   };
 
   return (
-    <div>
+    <div className="row1 userlist">
       <h1>Users ( {users?.length} users )</h1>
       {loadingDelete && <LoadingBox></LoadingBox>}
       {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
@@ -65,16 +65,16 @@ function UserListScreen() {
                 <td>{user.isAdmin ? "Yes" : "No"}</td>
                 <td>
                   <Link to={`/admin/user/${user._id}/edit`}>
-                    <button type="button" className="small">
-                      Edit
+                    <button type="button" className="small yellow">
+                      <i class="fa fa-pencil"></i>
                     </button>
                   </Link>
                   <button
                     type="button"
-                    className="small"
+                    className="small red"
                     onClick={() => deleteHandler(user)}
                   >
-                    Delete
+                    <i className="fa fa-trash-o"></i>
                   </button>
                 </td>
               </tr>

@@ -32,6 +32,9 @@ export default function ProfileScreen() {
     if (!userInfo) {
       navigate("/signin");
     }
+    if (successUpdate) {
+      navigate(0);
+    }
     if (!user) {
       dispatch({ type: USER_UPDATE_PROFILE_RESET });
       dispatch(detailsUser(userInfo._id));
@@ -44,7 +47,7 @@ export default function ProfileScreen() {
         setSellerDescription(user.seller.description);
       }
     }
-  }, [dispatch, userInfo, userInfo._id, user, navigate]);
+  }, [dispatch, userInfo._id, user, navigate, userInfo, successUpdate]);
 
   const submitHandler = (e) => {
     e.preventDefault();

@@ -37,7 +37,7 @@ function SellerScreen(props) {
   }, [dispatch, sellerId]);
   console.log(user);
   return (
-    <div>
+    <div className="row1">
       <div>
         <h1>Top Sellers</h1>
         {loadingSellers ? (

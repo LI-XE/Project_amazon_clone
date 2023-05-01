@@ -11,6 +11,8 @@ import { prices } from "../utils";
 import { ratings } from "../utils";
 
 function SearchScreen(props) {
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [sortOpen, setSortOpen] = useState(false);
   const [listOpen, setListOpen] = useState(true);
   const [priceListOpen, setPriceListOpen] = useState(true);
   const [ratingListOpen, setRatingListOpen] = useState(true);
@@ -48,7 +50,18 @@ function SearchScreen(props) {
       })
     );
     dispatch(listCategories());
-  }, [dispatch, name, category, min, max, rating, order, pageNum]);
+  }, [
+    dispatch,
+    name,
+    category,
+    min,
+    max,
+    rating,
+    order,
+    pageNum,
+    filterOpen,
+    sortOpen,
+  ]);
 
   const getFilterUrl = (filter) => {
     const filterPage = filter.page || pageNum;
@@ -60,10 +73,14 @@ function SearchScreen(props) {
     const filterMax = filter.max ? filter.max : filter.max === 0 ? 0 : max;
     return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/order/${sortOrder}/pageNum/${filterPage}`;
   };
+
   return (
     <div className="search_screen">
       <div className="row">
-        <div className="left">
+        <div className={filterOpen ? "open filter" : "left filter"}>
+          {filterOpen && (
+            <i className="fa fa-close" onClick={() => setFilterOpen(false)}></i>
+          )}
           <h2>Filters</h2>
           <div className="row top" onClick={() => setListOpen(!listOpen)}>
             {listOpen ? (
@@ -149,9 +166,7 @@ function SearchScreen(props) {
                 <li key={r.name}>
                   <Link
                     to={getFilterUrl({ rating: r.rating })}
-                    className={
-                      r.rating === rating ? "active" : "" 
-                    }
+                    className={r.rating === rating ? "active" : ""}
                   >
                     <Rating caption={" & up "} rating={r.rating} />
                   </Link>
@@ -170,21 +185,43 @@ function SearchScreen(props) {
                 <MessageBox>No Product Found</MessageBox>
               ) : (
                 <>
-                  <div className="row results">
+                  <div className="results">
                     <h2>Results: ( {allProducts?.length} items )</h2>
-                    <div>
-                      Sort by{" "}
-                      <select
-                        value={order}
-                        onChange={(e) => {
-                          navigate(getFilterUrl({ order: e.target.value }));
-                        }}
+                    <div className="sort">
+                      <button
+                        type="submit"
+                        className="silver filterBtn"
+                        onClick={() => setFilterOpen(!filterOpen)}
                       >
-                        <option value="newest">Newest Arrivals</option>
-                        <option value="lowest">Price: Low to High</option>
-                        <option value="highest">Price: High to Low</option>
-                        <option value="toprated">Avg. Customer Reviews</option>
-                      </select>
+                        Filters
+                      </button>
+                      <div className="sortby">
+                        <button
+                          type="submit"
+                          className="silver sortBtn"
+                          onClick={() => setSortOpen(!sortOpen)}
+                        >
+                          Sort by{" "}
+                        </button>
+                        {/* {sortOpen && ( */}
+                        <div className="showWSort">
+                          <select
+                            value={order}
+                            className={sortOpen ? "active" : "nonactive"}
+                            onChange={(e) => {
+                              navigate(getFilterUrl({ order: e.target.value }));
+                            }}
+                          >
+                            <option value="newest">Newest Arrivals</option>
+                            <option value="lowest">Price: Low to High</option>
+                            <option value="highest">Price: High to Low</option>
+                            <option value="toprated">
+                              Avg. Customer Reviews
+                            </option>
+                          </select>
+                        </div>
+                        {/* )} */}
+                      </div>
                     </div>
                   </div>
                   <div className="row center">
@@ -194,7 +231,11 @@ function SearchScreen(props) {
                   </div>
                   <div className="row center pagination">
                     {[...Array(pages).keys()].map((x) => (
-                      <Link className={x+1 === page ? "active" : ""} key={x + 1} to={getFilterUrl({ page: x + 1 })}>
+                      <Link
+                        className={x + 1 === page ? "active" : ""}
+                        key={x + 1}
+                        to={getFilterUrl({ page: x + 1 })}
+                      >
                         {x + 1}
                       </Link>
                     ))}

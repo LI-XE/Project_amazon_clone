@@ -44,7 +44,7 @@ function UserEditScreen(props) {
   };
 
   return (
-    <div>
+    <div className="row1">
       <form className="form" onSubmit={submitHandler}>
         <div>
           <h1>Edit User {username}</h1>
