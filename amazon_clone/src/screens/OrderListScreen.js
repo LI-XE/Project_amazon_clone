@@ -26,7 +26,7 @@ function OrderListScreen(props) {
     if (successDelete) {
       dispatch({ type: ORDER_DELETE_ADMIN_RESET });
     }
-    dispatch(listOrders({ seller: sellerMode ? userInfo._id : ""}));
+    dispatch(listOrders({ seller: sellerMode ? userInfo._id : "" }));
   }, [dispatch, successDelete, userInfo, sellerMode]);
 
   const deleteHandler = (e, order) => {
@@ -80,21 +80,21 @@ function OrderListScreen(props) {
                   <td>
                     <button
                       type="button"
-                      className="small"
+                      className="small yellow"
                       onClick={() => {
                         navigate(`/order/${order._id}`);
                       }}
                     >
-                      Details
+                      <i className="fa fa-info"></i>
                     </button>
                     <button
                       type="button"
-                      className="small"
+                      className="small red"
                       onClick={(e) => {
                         deleteHandler(e, order);
                       }}
                     >
-                      Delete
+                      <i className="fa fa-trash-o"></i>
                     </button>
                   </td>
                 </tr>

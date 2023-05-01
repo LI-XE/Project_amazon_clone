@@ -57,12 +57,12 @@ export default function OrderHistoryScreen(props) {
                   <td>
                     <button
                       type="button"
-                      className="small"
+                      className="small yellow"
                       onClick={() => {
                         navigate(`/order/${order._id}`);
                       }}
                     >
-                      Details
+                      <i className="fa fa-info"></i>
                     </button>
                   </td>
                 </tr>
